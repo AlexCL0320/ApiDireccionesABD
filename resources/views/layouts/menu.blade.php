@@ -1,47 +1,44 @@
 <li class="side-menus {{ Request::is('*') ? 'active' : '' }}">
-    <a style="background-color: #5A5A5A; color: white; border: 1px solid #737373;" class="nav-link" href="/home">
-        <i class=" fab fa-bandcamp"></i><span>Inicio</span>
+    <a style="margin: 10px; max-width: 90%; background-color:#F4F6F9; color: black; border: 1px solid #737373; border-radius: 6px" class="nav-link" href="/home">
+    <img src="{{ asset('img/iconos_side_bar/inicio.png') }}" alt="Inicio Icon" style="width: 30px; height: 30px; margin-right: 5px;">
+    <span>Inicio</span>
     </a>
-    @can('ver-usuario')
-    <a style="background-color: #5A5A5A; color: white; border: 1px solid #737373" class="nav-link" href="/usuarios">
+    <!--    @can('ver-usuario')
+    <a style="background-color: #F4F6F9; color: white; border: 1px solid #737373" class="nav-link" href="/usuarios">
         <i class=" fas fa-users"></i><span>Usuarios</span>
     </a>
-    @endcan
+    @endcan-->
     @can('registrar-direccion')
-    <a style="background-color: #5A5A5A; color: white; border: 1px solid #737373" class="nav-link" href="/roles">
-        <i class="fas fa-book"></i><span>Direcciones</span>
-    </a>
-    @endcan
-    @can('ver-Estados')
-    <a style="background-color: #5A5A5A; color: white; border: 1px solid #737373" class="nav-link" href="/estados">
-        <i class="fas fa-map-marked-alt"></i><span>Estados</span>
-    </a>
-    @endcan
-    @can('ver-Municipios')
-    <a style="background-color: #5A5A5A; color: white; border: 1px solid #737373" class="nav-link" href="/municipios">
-        <i class="fas fa-landmark"></i><span>Municipios</span>
-    </a>
-    @endcan
-    @can('ver-Colonias')
-    <a style="background-color: #5A5A5A; color: white; border: 1px solid #737373" class="nav-link" href="/colonias">
-        <i class=" fas fa-blog"></i><span>Colonias</span>
-    </a>
-    @endcan
-    @can('ver-CP')
-    <a style="background-color: #5A5A5A; color: white; border: 1px solid #737373" class="nav-link" href="/escuelas">
-        <i class=" fas fa-blog"></i><span>Codigos Postales</span>
-    </a>
-    @endcan
-    @can('ver-CP')
-    <a style="background-color: #5A5A5A; color: white; border: 1px solid #737373" class="nav-link" href="/escuelas">
-        <i class=" fas fa-blog"></i><span>Codigos Postales</span>
-    </a>
-    @endcan
-    @can('ver-CP')
-    <a style="background-color: #5A5A5A; color: white; border: 1px solid #737373" class="nav-link" href="/escuelas">
-        <i class=" fas fa-blog"></i><span>Codigos Postales</span>
+    <a style="margin: 10px; max-width: 90%; background-color:#F4F6F9; color: black; border: 1px solid #737373; border-radius: 6px" class="nav-link" href="/direcciones">
+    <img src="{{ asset('img/iconos_side_bar/direccion.png') }}" alt="Direcciones Icon" style="width: 30px; height: 30px; margin-right: 5px;">
+    <span>Direcciones</span>
     </a>
     @endcan
 
+    @can('ver-estados')
+    <a style="margin: 10px; max-width: 90%; background-color:#F4F6F9; color: black; border: 1px solid #737373; border-radius: 6px" class="nav-link" href="/estados">
+    <img src="{{ asset('img/iconos_side_bar/estados.png') }}" alt="Estados Icon" style="width: 33px; height: 28px; margin-right: 5px;">
+    <span>Estados</span>
+    </a>
+    @endcan
+
+    @can('ver-municipios')
+    <a style="margin: 10px; max-width: 90%; background-color:#F4F6F9; color: black; border: 1px solid #737373; border-radius: 6px" class="nav-link" href="/municipios">
+    <img src="{{ asset('img/iconos_side_bar/municipios.png') }}" alt="Estados Icon" style="width: 40px; height: 35px; margin-right: 5px;">
+    <span>Municipios</span>
+    </a>
+    @endcan
+
+    @can('ver-colonias')
+    <a style="margin: 10px; max-width: 90%; background-color:#F4F6F9; color: black; border: 1px solid #737373; border-radius: 6px" class="nav-link" href="/colonias">
+    <img src="{{ asset('img/iconos_side_bar/colonias.png') }}" alt="Estados Icon" style="width: 40px; height: 30px; margin-right: 5px;">
+    <span>Colonias</span>
+    </a>
+    @endcan
+    
+    <a style="margin: 10px; max-width: 90%; background-color:#F4F6F9; color: black; border: 1px solid #737373; border-radius: 6px" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    <img src="{{ asset('img/iconos_side_bar/salir.png') }}" alt="Inicio Icon" style="width: 30px; height: 30px; margin-right: 5px;">
+    <span>Salir</span>
+    </a>
 
 </li>

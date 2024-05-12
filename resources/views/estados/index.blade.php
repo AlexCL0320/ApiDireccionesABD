@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
   <div class="section-header">
-      <h3 class="page__heading">Estados</h3>
+      <h3 style="color:black" class="page__heading">Estados</h3>
   </div>
   <div class="section-body">
     <div class="row">
@@ -13,12 +13,11 @@
             <!-- Agregamos un enlace para crear un nuevo estado -->
             <a class="btn btn-warning" href="{{ route('estados.create') }}" title="Crear nuevo estado">Agregar estado</a>
             <div><br></div>
-            <!-- Creamos la tabla para mostrar los estados -->
-            <table class="table table-striped mt-2" id="miTabla">
-              <thead style="background-color:#6777ef; color: white;">
+            <table class="table table-striped mt-2 table_id" id="miTabla">
+              <thead style="background-color:#326F8A">
                 <tr>
-                  <th style="color: white;">ID</th>
-                  <th style="color: white;">Nombre del Estado</th>
+                  <th style="color: white;">No.</th>
+                  <th style="color: white;">Nombre</th>
                   <th style="color: white;">Acciones</th>
                 </tr>
               </thead>
@@ -28,12 +27,22 @@
                 <tr>
                   <td>{{ $estado->id }}</td>
                   <td>{{ $estado->nombre_estado }}</td>
-                  <td style=" display: flex; justify-content: space-between; gap: 10px; padding: 10px">
-                    <!-- Agregamos enlaces para editar y eliminar cada estado -->
-                    <a class="btn btn-info" href="{{ route('estados.edit', $estado->id) }}" title="Editar estado">Editar</a>
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['estados.destroy', $estado->id], 'style' => 'display:inline']) !!}
-                    {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                  <td style="padding: 10px">     
+                    <a style="background-color: #326565; color: white; margin-bottom: 0%;" class="btn" href="{{ route('estados.edit', $estado->id) }}" title="Editar estado">Editar</a>
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['estados.destroy', $estado->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $estado->id]) !!}
+                      {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $estado->id . ')']) !!}
                     {!! Form::close() !!}
+
+                    <script>
+                        function confirmarEliminar(id) {
+                            if (confirm('¿Estás seguro de eliminar este registro?')) {
+                                document.getElementById('deleteForm-' + id).submit();
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    </script>
                   </td>
                 </tr>
                 @endforeach

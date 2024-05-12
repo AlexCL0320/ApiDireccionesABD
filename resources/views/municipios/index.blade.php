@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
   <div class="section-header">
-      <h3 class="page__heading">Municipios</h3>
+      <h3 style="color:black" class="page__heading">Municipios</h3>
   </div>
   <div class="section-body">
     <div class="row">
@@ -16,13 +16,12 @@
             @endcan
             <div><br></div>
             <!-- Creamos la tabla para mostrar los municipios -->
-            <table class="table table-striped mt-2" id="miTabla">
-              <thead style="background-color:#6777ef; color: white;">
-                <tr>
-                  <th style="color: white;">ID</th>
-                  <th style="color: white;">ID del Estado</th>
-                  <th style="color: white;">Numero del Municipio</th>
-                  <th style="color: white;">Nombre del Municipio</th>
+            <table class="table table-striped mt-2 table_id" id="miTabla">
+              <thead style="background-color:#326F8A">
+                 <tr>
+                  <th style="color: white;">Estado</th>
+                  <th style="color: white;">No. Municipio</th>
+                  <th style="color: white;">Nombre</th>
                   <th style="color: white;">Acciones</th>
                 </tr>
               </thead>
@@ -30,7 +29,6 @@
                 <!-- Iteramos sobre los municipios y los mostramos en la tabla -->
                 @foreach ($municipios as $municipio)
                 <tr>
-                  <td>{{ $municipio->id }}</td>
                   <td>{{ $municipio->estado_id }}</td>
                   <td>{{ $municipio->numero_municipio }}</td>
                   <td>{{ $municipio->nombre }}</td>

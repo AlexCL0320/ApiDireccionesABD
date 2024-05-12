@@ -9,7 +9,7 @@
         <li class="dropdown">
             <a href="#" data-toggle="dropdown"
                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="{{ asset('img/logo.png') }}" width="100px">
+                <img alt="image" src="{{ asset('img/usuario_@.png') }}" width="100px">
                 <div class="d-sm-none d-lg-inline-block">
                     ¡Bienvenido! {{Str::words(Auth::user()->name)}}</div>
             </a>

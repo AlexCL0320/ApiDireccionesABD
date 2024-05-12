@@ -7,6 +7,12 @@
         padding: 10px; /* Agrega relleno para mejorar la legibilidad */
         /*text-align: center; /* Alinea el texto al centro si es necesario */
     }
+
+    .gradient-background {
+        width: 100%;
+        height: 300px;
+        background-image: linear-gradient(to top, #FFFFFF, #6F9292, #5B7F7F, #4C6969, #3C5353); /* Degradado con tonos azules más cercanos al color base */
+}
 </style>
 
 <!DOCTYPE html>
@@ -45,13 +51,13 @@
 <body>
 <div id="app">
     <div  class="main-wrapper main-wrapper-1">
-        <div style="background-color: #326F8A" class="navbar-bg"></div>
+        <div style="background-color: #253745" class="navbar-bg"></div>
         <nav class="navbar navbar-expand-lg main-navbar">
             @include('layouts.header')
 
         </nav>
 
-        <div style="background-color: #305577;"  class="main-sidebar main-sidebar-postion">
+        <div style=""  class="main-sidebar main-sidebar-postion; gradient-background">
             @include('layouts.sidebar')
         </div>
 

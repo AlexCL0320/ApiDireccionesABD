@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Direccion;
 
 class DireccionController extends Controller
 {
@@ -13,8 +14,7 @@ class DireccionController extends Controller
      */
     public function index()
     {
-        $escuelas = Direccion::paginate(2);
-        $escuelas = Direccion::all();
+        $direcciones = Direccion::all();
         return view('direcciones.index', compact('direcciones'));
     }
 

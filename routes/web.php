@@ -5,12 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
-use App\Http\Controllers\BlogController;
-use App\Http\Controllers\EscuelaController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\MunicipioController;
 use App\Http\Controllers\ColoniaController;
-
+use App\Http\Controllers\DireccionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,9 +35,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RolController::class);
     Route::resource('usuarios', UsuarioController::class);
-    Route::resource('blogs', BlogController::class);
-    Route::resource('escuelas', EscuelaController::class);
     Route::resource('estados', EstadoController::class);
     Route::resource('municipios', MunicipioController::class);
     Route::resource('colonias', ColoniaController::class);
+    Route::resource('direcciones', DireccionController::class);
 });
