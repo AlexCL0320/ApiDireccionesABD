@@ -6,7 +6,7 @@
     </div>
     <div class="sidebar-brand sidebar-brand-sm" style="margin-top: 20%;">
         <a href="{{ url('/') }}" class="small-sidebar-text">
-            <img class="navbar-brand-full" src="{{ asset('img/logo.png') }}" width="70px" alt=""/>
+            <img class="navbar-brand-full" src="{{ asset('img/logo.png') }}" width="50px" alt=""/>
         </a>
     </div>
     <ul style="border-color:#414141;" class="sidebar-menu" style="margin-left: -100%;">

@@ -85,7 +85,8 @@
                                                             <div class="card-block">
                                                                 <div class="d-flex align-items-center">
                                                                     <img src="{{ asset('img/iconos_side_bar/colonias.png') }}" alt="icono_usuario2" width="90" height="90" class="mr-3">
-                                                                    <h5 class="m-0" style="color: black;">Colonias</h5>                                                                    <h5  style="margin-top: 20%; margin-bottom: 0%; color:black"class="ml-auto">{{$cant_colonias}}</h5>
+                                                                    <h5 class="m-0" style="color: black;">Colonias</h5>                                                           
+                                                                    <h5  style="margin-top: 20%; margin-bottom: 0%; color:black"class="ml-auto">{{$cant_colonias}}</h5>
                                                                 </div>
                                                             </div>
                                                         </div>
