@@ -16,26 +16,38 @@
     <link href="{{ asset('assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
 </head>
-<body style="background-color: #EDEDED;">
+<body style="background-color: white; margin: 0; padding: 0; height: 100%;">
 
 <div id="app">
-    <section class="section">
-        <div class="container mt-5">
+    <div class="card-header" style="border-color: #FFFFFF;background-color: #253745; color: white; display: flex; justify-content: flex-start; align-items: flex-start; height: 48px;border-radius: 0px;">
+                         <div class="login-message" style="margin-top: -20px; color: white; font-size: 20px; font-family: 'Nunito';">Bienvienido</div>
+    </div>
+    <section class="section" style="padding: 65px">
+        <div class="container mt-6" style="">
             <div class="column">
-                <div class="col-md-6 offset-md-3">
-                    <div class="login-brand">
-                        <img src="{{ asset('img/logo.png') }}" alt="logo" width="150"
-                             >
-                    </div>
-                    <div class="simple-footer">
-{{--                        Copyright &copy; {{ getSettingValue('application_name') }}  {{ date('Y') }}--}}
-                    </div>
-                    @yield('content')
-                    
+            <div class="row">
+                <div class="col-md-6" style="text-align: center;">
+                <div class= "login-message" style="margin-bottom: 10px; font-size: 30px; font-family: 'Nunito'">GEO-CODE </div>                         
+                <div class="card-header" style="border-color: #9BA8AB; background-color: white; color: black; display: flex height: 45px;">
+                    <img clas= "shadow-light rounded" src="{{ asset('img/fondo_login3.gif') }}" alt="logo" width="400"   style="border-radius: 12px;"> 
+                    <br>
+                    <br>
                 </div>
+                    <br>
+                    <h3 style="margin: 0; font-size: 20px; font-family: 'Courier New'; font-weight: normal; text-transform: none;">API Direcciones - Mexico</h3>
+               </div>
+                <div class="col-md-6">
+                    @yield('content')
+                </div>
+            </div>
             </div>
         </div>
     </section>
+    
+    <footer class="card-footer footer-bottom" style="background-color:black; display: flex;
+            flex-direction: column; flex:1">
+            @include('layouts.footer') 
+    </footer>
 </div>
 <!-- General JS Scripts -->
 <script src="{{ asset('assets/js/jquery.min.js') }}"></script>

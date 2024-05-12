@@ -35,11 +35,18 @@
             
         }
 
+        .card {
+            border-radius: 12px;
+            box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1); /* offsetX offsetY blurRadius spreadRadius color */
+        }
+
 
     </style>
-    <div class="card card-dark">
-        <div ><p class="login-message">Inicio de Sesion</p></div>
-
+    <div class="card"  style="border-radius: 12px; ">
+        <div ><p class="login-message">INICIO DE SESION</p></div>
+        <div style="display:flex; justify-content: center; ">
+            <img src="{{ asset('img/usuarios.png') }}" alt="logo" width="115">
+        </div>
         <div class="card-body">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
