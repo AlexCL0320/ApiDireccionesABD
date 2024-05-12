@@ -42,7 +42,7 @@
                                     <div class="col-md-4 col-xl-4">
                                         <div class="card bg-warning order-card">
                                             <div class="card-block">
-                                                <h5>Direcciones</h5>                                               
+                                                <h5>Direcciones - Cambio Repositorio</h5>                                               
                                                 @php
                                                  use App\Models\Direccion;
                                                  //use App\Models\Blog;
