@@ -42,7 +42,7 @@
 
 
     </style>
-    <div class="card"  style="border-radius: 12px; ">
+    <div class="card card-dark"  style="border-radius: 12px; ">
         <div ><p class="login-message">INICIO DE SESION</p></div>
         <div style="display:flex; justify-content: center; ">
             <img src="{{ asset('img/usuarios.png') }}" alt="logo" width="115">
@@ -63,7 +63,7 @@
                     <!-- <label for="email">Usuario</label>-->
                     <input style="border-color: #009999" aria-describedby="emailHelpBlock" id="email" type="email"
                            class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email"
-                           placeholder="Usuario o correo" tabindex="1"
+                           placeholder="Correo" tabindex="1"
                            value="{{ (Cookie::get('email') !== null) ? Cookie::get('email') : old('email') }}" autofocus
                            required>
                            <!--

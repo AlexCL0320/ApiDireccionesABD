@@ -1,9 +1,35 @@
+<style>
+
+        /* Estilos para el texto dentro del formulario */
+        .form-text {
+            font-size: 15px; /* Tamaño de letra de 20 */
+            color: black; /* Color de texto negro */
+            font-family: 'Nunito', sans-serif; /* Fuente Nunito */
+        }
+
+        /* Estilos para el botón personalizado */
+        .custom-btn {
+            background-color: #6F9292; /* Color de fondo personalizado */
+            border-color: #6F9292; /* Color del borde personalizado */
+            box-shadow: none; 
+            border: 1px solid transparent;
+        }
+
+        /* Estilos para el botón personalizado al pasar el mouse */
+        .custom-btn:hover {
+            background-color: #326565; /* Color de fondo personalizado al pasar el mouse */
+            border-color: #326565; /* Color del borde personalizado al pasar el mouse */
+            
+        }
+
+</style>
+
 <div id="changePasswordModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Actualizar Contraseña</h5>
+                <h5 style="color:black" class="modal-title">Actualizar Contraseña</h5>
                 <button type="button" aria-label="Close" class="close outline-none" data-dismiss="modal">×</button>
             </div>
             <form method="POST" id='changePasswordForm'>
@@ -63,7 +89,7 @@
                     </div>
                 </div>
                 <div class="text-right">
-                    <button type="submit" class="btn btn-primary" id="btnPrPasswordEditSave" data-loading-text="<span class='spinner-border spinner-border-sm'></span> Processing..." title="Guardar cambios">Actualizar</button>
+                    <button type="submit" style="color:white" class="custom-btn btn" id="btnPrPasswordEditSave" data-loading-text="<span class='spinner-border spinner-border-sm'></span> Processing..." title="Guardar cambios">Actualizar</button>
                     <button type="button" class="btn btn-light ml-1" data-dismiss="modal" title="Cancelar">Cancelar
                     </button>
                 </div>
