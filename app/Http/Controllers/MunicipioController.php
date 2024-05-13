@@ -15,7 +15,11 @@ class MunicipioController extends Controller
     public function index()
     {        
         // Obtener todos los municipios y pasarlos a la vista
-        $municipios = Municipio::all();
+        $municipios = Municipio::query()
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->select('estados.nombre_estado as n_e','municipios.nombre as n_m', 'municipios.id')
+            ->orderByDesc('municipios.estado_id')
+            ->get();
         return view('municipios.index', compact('municipios'));
     }
 

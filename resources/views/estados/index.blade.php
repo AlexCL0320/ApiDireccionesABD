@@ -11,7 +11,7 @@
         <div class="card">
           <div class="card-body">
             <!-- Agregamos un enlace para crear un nuevo estado -->
-            <a class="btn btn-warning" href="{{ route('estados.create') }}" title="Crear nuevo estado">Agregar estado</a>
+           <!-- <a class="btn btn-warning" href="{{ route('estados.create') }}" title="Crear nuevo estado">Agregar estado</a>-->
             <div><br></div>
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
@@ -28,9 +28,10 @@
                   <td>{{ $estado->id }}</td>
                   <td>{{ $estado->nombre_estado }}</td>
                   <td style="padding: 10px">     
-                    <a style="background-color: #326565; color: white; margin-bottom: 0%;" class="btn" href="{{ route('estados.edit', $estado->id) }}" title="Editar estado">Editar</a>
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['estados.destroy', $estado->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $estado->id]) !!}
-                      {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $estado->id . ')']) !!}
+                  <!--  <a style="background-color: #326565; color: white; margin-bottom: 0%;" class="btn" href="{{ route('estados.edit', $estado->id) }}" title="Editar estado">Editar</a> 
+                        -->  
+                  {!! Form::open(['method' => 'DELETE', 'route' => ['estados.destroy', $estado->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $estado->id]) !!}
+                      {!! Form::submit('Eliminar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $estado->id . ')']) !!}
                     {!! Form::close() !!}
 
                     <script>
@@ -65,8 +66,8 @@
   // Inicializamos el DataTable en la tabla
   $('#miTabla').DataTable({
     lengthMenu: [
-      [2, 5, 10],
-      [2, 5, 10]
+      [5, 10, 15],
+      [5, 10, 15]
     ],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',

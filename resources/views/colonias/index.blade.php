@@ -30,20 +30,26 @@
                 <!-- Iteramos sobre los colonias y los mostramos en la tabla -->
                 @foreach ($colonias as $colonia)
                 <tr>
+                  <td>{{ $colonia->n_e }}</td>
+                  <td>{{ $colonia->n_m }}</td>
                   <td>{{ $colonia->id }}</td>
-                  <td>{{ $colonia->estado_id }}</td>
-                  <td>{{ $colonia->numero_colonia }}</td>
-                  <td>{{ $colonia->nombre }}</td>
-                  <td style=" display: flex; justify-content: space-between; gap: 10px; padding: 10px">
-                    <!-- Agregamos enlaces para editar y eliminar cada colonia si el usuario tiene los permisos correspondientes -->
-                    @can('editar-colonia')
-                    <a class="btn btn-info" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
-                    @endcan
-                    @can('borrar-colonia')
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline']) !!}
-                    {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                  <td>{{ $colonia->n }}</td>
+                  <td style="padding: 10px">     
+                    <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $colonia->id]) !!}
+                      {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $colonia->id . ')']) !!}
                     {!! Form::close() !!}
-                    @endcan
+
+                    <script>
+                        function confirmarEliminar(id) {
+                            if (confirm('¿Estás seguro de eliminar este registro?')) {
+                                document.getElementById('deleteForm-' + id).submit();
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    </script>
                   </td>
                 </tr>
                 @endforeach

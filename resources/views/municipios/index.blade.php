@@ -12,7 +12,7 @@
           <div class="card-body">
             <!-- Agregamos un enlace para crear un nuevo municipio si el usuario tiene el permiso -->
             @can('crear-municipio')
-            <a class="btn btn-warning" href="{{ route('municipios.create') }}" title="Crear nuevo municipio">Agregar municipio</a>
+            <!--<a class="btn btn-warning" href="{{ route('municipios.create') }}" title="Crear nuevo municipio">Agregar municipio</a>-->
             @endcan
             <div><br></div>
             <!-- Creamos la tabla para mostrar los municipios -->
@@ -29,19 +29,25 @@
                 <!-- Iteramos sobre los municipios y los mostramos en la tabla -->
                 @foreach ($municipios as $municipio)
                 <tr>
-                  <td>{{ $municipio->estado_id }}</td>
-                  <td>{{ $municipio->numero_municipio }}</td>
-                  <td>{{ $municipio->nombre }}</td>
-                  <td style=" display: flex; justify-content: space-between; gap: 10px; padding: 10px">
-                    <!-- Agregamos enlaces para editar y eliminar cada municipio si el usuario tiene los permisos correspondientes -->
-                    @can('editar-municipio')
-                    <a class="btn btn-info" href="{{ route('municipios.edit', $municipio->id) }}" title="Editar municipio">Editar</a>
-                    @endcan
-                    @can('borrar-municipio')
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['municipios.destroy', $municipio->id], 'style' => 'display:inline']) !!}
-                    {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
+                  <td>{{ $municipio->n_e }}</td>
+                  <td>{{ $municipio->id }}</td>
+                  <td>{{ $municipio->n_m }}</td>
+                  <td style="padding: 10px">     
+                   <!-- <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('municipios.edit', $municipio->id) }}" title="Editar estado">Editar</a> -->
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['municipios.destroy', $municipio->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $municipio->id]) !!}
+                      {!! Form::submit('Eliminar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $municipio->id . ')']) !!}
                     {!! Form::close() !!}
-                    @endcan
+
+                    <script>
+                        function confirmarEliminar(id) {
+                            if (confirm('¿Estás seguro de eliminar este registro?')) {
+                                document.getElementById('deleteForm-' + id).submit();
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        }
+                    </script>
                   </td>
                 </tr>
                 @endforeach
