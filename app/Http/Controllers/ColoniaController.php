@@ -18,10 +18,10 @@ class ColoniaController extends Controller
         // Obtener todos los estados y pasarlos a la vista
         $colonias = Colonia::query()
         ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
-        ->join('estados', 'colonias.estado_id','=','estados.id')
-        ->select('estados.nombre_estado as n_e','municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id')
-        ->where('colonias.estado_id',"=", "estados.id")
-        ->orderByDesc('estados.id')
+        ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+        ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id')
+        ->whereColumn('municipios.estado_id', '=', 'estados.id')
+        ->whereColumn('colonias.estado_id', '=', 'estados.id')
         ->get();
         return view('colonias.index', compact('colonias'));
     }

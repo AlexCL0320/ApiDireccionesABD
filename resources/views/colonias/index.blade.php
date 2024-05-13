@@ -12,7 +12,8 @@
           <div class="card-body">
             <!-- Agregamos un enlace para crear un nuevo colonia si el usuario tiene el permiso -->
             @can('crear-colonia')
-            <a class="btn btn-warning" href="{{ route('colonias.create') }}" title="Crear nuevo colonia">Agregar colonia</a>
+           <!-- <a class="btn btn-warning" href="{{ route('colonias.create') }}" title="Crear nuevo colonia">Agregar colonia</a>
+            -->
             @endcan
             <div><br></div>
             <!-- Creamos la tabla para mostrar los colonias -->
@@ -35,8 +36,9 @@
                   <td>{{ $colonia->id }}</td>
                   <td>{{ $colonia->n }}</td>
                   <td style="padding: 10px">     
-                    <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $colonia->id]) !!}
+                   <!-- <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
+                    -->
+                   {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $colonia->id]) !!}
                       {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $colonia->id . ')']) !!}
                     {!! Form::close() !!}
 
@@ -72,8 +74,8 @@
   // Inicializamos el DataTable en la tabla
   $('#miTabla').DataTable({
     lengthMenu: [
-      [2, 5, 10],
-      [2, 5, 10]
+      [20, 40, 80],
+      [20, 40, 80]
     ],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',

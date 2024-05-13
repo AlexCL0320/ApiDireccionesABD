@@ -13,7 +13,8 @@
                 
             
                         @can('crear-direccion')
-                        <a class="btn btn-warning" href="{{ route('direcciones.create') }}">Nuevo</a>
+                        <a class="btn btn-warning" href="{{ route('direcciones.create') }}">Registrar dreccion</a>
+                        <br><br>
                         @endcan
             
                         <table class="table table-striped mt-2 table_id" id="miTabla">

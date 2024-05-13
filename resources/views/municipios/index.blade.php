@@ -70,8 +70,8 @@
   // Inicializamos el DataTable en la tabla
   $('#miTabla').DataTable({
     lengthMenu: [
-      [2, 5, 10],
-      [2, 5, 10]
+      [10, 20, 40],
+      [10, 20, 40]
     ],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
