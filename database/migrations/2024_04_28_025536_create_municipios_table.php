@@ -21,6 +21,7 @@ class CreateMunicipiosTable extends Migration
             $table->timestamps();
         });
     }
+    /*Verion anterior
 
     /**
      * Reverse the migrations.
