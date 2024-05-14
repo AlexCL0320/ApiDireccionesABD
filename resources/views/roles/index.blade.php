@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Roles</h3>
+        <h3 style="color: black;" class="page__heading">Roles</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -20,10 +20,10 @@
                          --}}
 
                             <table class="table table-striped mt-2 table_id" id="miTabla2">
-                                <thead style="background-color:#6777ef">
+                                <thead style="background-color:#326F8A">
                                     <th style="display: none;">ID</th>
-                                    <th style="color:#fff;">Rol</th>
-                                    <th style="color:#fff;">Acciones</th>
+                                    <th style="color:#fff; width: 60%;">Rol</th>
+                                    <th style="color:#fff; width: 40%;">Acciones</th>
                                 </thead>
                                 <tbody>
                                 @foreach ($roles as $role)
@@ -32,13 +32,23 @@
                                     <td>{{ $role->name }}</td>
                                     <td>
                                         @can('editar-rol')
-                                            <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}" title="Editar role">Editar</a>
+                                            <a style ="background-color: #326565; color: white"  class="btn" href="{{ route('roles.edit',$role->id) }}" title="Editar role">Editar</a>
                                         @endcan
 
                                         @can('borrar-rol')
-                                            {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                                                {!! Form::submit('Borrar',['class' => 'btn btn-danger']) !!}
-                                            {!! Form::close() !!}
+                                        {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $role->id]) !!}
+                                        {!! Form::submit('Borar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $role->id . ')']) !!}
+                                        {!! Form::close() !!}
+                                        <script>
+                                            function confirmarEliminar(id) {
+                                                if (confirm('¿Estás seguro de eliminar este registro?')) {
+                                                    document.getElementById('deleteForm-' + id).submit();
+                                                    return true;
+                                                } else {
+                                                    return false;
+                                                }
+                                            }
+                                        </script>
                                         @endcan
                                     </td>
                                 </tr>
@@ -65,8 +75,8 @@
     <script>
         new DataTable('#miTabla2', {
     lengthMenu: [
-        [2, 5, 10],
-        [2, 5, 10]
+        [3, 5, 10],
+        [3, 5, 10]
     ],
 
     columns: [

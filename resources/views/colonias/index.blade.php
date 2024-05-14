@@ -12,8 +12,7 @@
           <div class="card-body">
             <!-- Agregamos un enlace para crear un nuevo colonia si el usuario tiene el permiso -->
             @can('crear-colonia')
-           <!-- <a class="btn btn-warning" href="{{ route('colonias.create') }}" title="Crear nuevo colonia">Agregar colonia</a>
-            -->
+              <a class="btn btn-warning" href="{{ route('colonias.create') }}" title="Crear nuevo colonia">Agregar colonia</a>
             @endcan
             <div><br></div>
             <!-- Creamos la tabla para mostrar los colonias -->
@@ -24,7 +23,7 @@
                   <th style="color: white;">Municipio</th>
                   <th style="color: white;">No. Colonia</th>
                   <th style="color: white;">Nombre</th>
-                  <th style="color: white;">Acciones</th>
+                  <!--<th style="color: white;">Acciones</th>-->
                 </tr>
               </thead>
               <tbody>
@@ -35,9 +34,8 @@
                   <td>{{ $colonia->n_m }}</td>
                   <td>{{ $colonia->id }}</td>
                   <td>{{ $colonia->n }}</td>
-                  <td style="padding: 10px">     
-                   <!-- <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
-                    -->
+                  <!--<td style="padding: 10px">     
+                   <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
                    {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $colonia->id]) !!}
                       {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $colonia->id . ')']) !!}
                     {!! Form::close() !!}
@@ -52,7 +50,7 @@
                             }
                         }
                     </script>
-                  </td>
+                  </td>-->
                 </tr>
                 @endforeach
               </tbody>
@@ -74,8 +72,8 @@
   // Inicializamos el DataTable en la tabla
   $('#miTabla').DataTable({
     lengthMenu: [
-      [20, 40, 80],
-      [20, 40, 80]
+      [100, 200, 400],
+      [100, 200, 400]
     ],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',

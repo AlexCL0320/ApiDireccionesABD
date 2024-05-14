@@ -29,7 +29,35 @@
                                 <div class="row">
                                 <div class="col-lg-3 col-lg-12">
                                         <div class="row display:flex;">
-                                            @can('registrar-direcciones')
+                                            @can('ver-usuario')
+                                                <div class="col-md-4 col-xl-4">
+                                                    <a href="/usuarios" style="text-decoration: none;">
+                                                        <div class="card bg-#E0E0E0 order-card mb-4" style="background-color: #E0E0E0">
+                                                            <div class="card-block">
+                                                                <div class="d-flex align-items-center">
+                                                                    <img src="{{ asset('img/iconos_side_bar/user.png') }}" alt="icono_usuario2" width="80" height="90" class="mr-3">
+                                                                    <h5 class="m-0" style="color: black;">Usuarios</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            @endcan
+                                            @can('ver-rol')
+                                                <div class="col-md-4 col-xl-4">
+                                                    <a href="/roles" style="text-decoration: none;">
+                                                        <div class="card bg-#E0E0E0 order-card mb-4" style="background-color: #E0E0E0">
+                                                            <div class="card-block">
+                                                                <div class="d-flex align-items-center">
+                                                                    <img src="{{ asset('img/iconos_side_bar/rol.png') }}" alt="roles" width="90" height="90" class="mr-3">
+                                                                    <h5 class="m-0" style="color: black;">Roles</h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            @endcan
+                                            @can('registrar-direccion')
                                                 <div class="col-md-4 col-xl-4">
                                                     <a href="/direcciones" style="text-decoration: none;">
                                                         <div class="card bg-#E0E0E0 order-card mb-4" style="background-color: #E0E0E0">

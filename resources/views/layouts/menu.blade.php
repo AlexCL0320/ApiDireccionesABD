@@ -8,6 +8,18 @@
         <i class=" fas fa-users"></i><span>Usuarios</span>
     </a>
     @endcan-->
+    @can('ver-usuario')
+    <a style="margin: 10px; max-width: 90%; background-color:#EEEEEE; color: black; border: 1px solid #737373; border-radius: 6px" class="nav-link" href="/usuarios">
+    <img src="{{ asset('img/iconos_side_bar/user.png') }}" alt="Usuarios Icon" style="width: 24px; height: 24px; margin-right: 5px;">
+    <span>Usuarios</span>
+    </a>
+    @endcan
+    @can('ver-rol')
+    <a style="margin: 10px; max-width: 90%; background-color:#EEEEEE; color: black; border: 1px solid #737373; border-radius: 6px" class="nav-link" href="/roles">
+    <img src="{{ asset('img/iconos_side_bar/rol.png') }}" alt="Usuarios Icon" style="width: 24px; height: 24px; margin-right: 5px;">
+    <span>Roles</span>
+    </a>
+    @endcan
     @can('registrar-direccion')
     <a style="margin: 10px; max-width: 90%; background-color:#F4F6F9; color: black; border: 1px solid #737373; border-radius: 6px" class="nav-link" href="/direcciones">
     <img src="{{ asset('img/iconos_side_bar/direccion.png') }}" alt="Direcciones Icon" style="width: 30px; height: 30px; margin-right: 5px;">

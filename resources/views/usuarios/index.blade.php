@@ -3,7 +3,7 @@
 @section('content')
 <section class="section">
   <div class="section-header">
-      <h3 class="page__heading">Usuarios</h3>
+      <h3 style="color:black" class="page__heading">Usuarios</h3>
   </div>
       <div class="section-body">
           <div class="row">
@@ -27,13 +27,10 @@
 
 
                             <table class="table table-striped mt-2 table_id" id="miTabla">
-                              <thead style="background-color:#326565">
+                              <thead style="background-color:#326F8A">
                                   <th style="display: none;">ID</th>
                                   <th style="color:#fff;">Nombre</th>
-                                  <th style="color:#fff;">Apelido Paterno</th>
-                                  <th style="color:#fff;">Apellido Materno</th>
-                                  <th style="color:#fff;">Telefono</th>
-                                  <th style="color:#fff;">Correo electronico</th>
+                                  <th style="color:#fff;">Correo</th>
                                   <th style="color:#fff;">Rol</th>
                                   <th style="color:#fff;">Acciones</th>
                               </thead>
@@ -43,9 +40,6 @@
                                     <td style="display: none;">{{ $usuario->id }}</td>
                                     <td>{{ $usuario->name }}</td>
                                     <td>{{ $usuario->email }}</td>
-                                    <td>{{ $usuario->name }}</td>
-                                    <td>{{ $usuario->email }}</td>
-                                    <td>{{ $usuario->name }}</td>
                                     <td style="align-items: center;">
                                       @if(!empty($usuario->getRoleNames()))
                                         @foreach($usuario->getRoleNames() as $rolNombre)
@@ -53,14 +47,23 @@
                                         @endforeach
                                       @endif
                                     </td>
+                                    <td style="padding: 10px">
+                                      <a style="background-color: #326565; color: white; margin-bottom: 0%;" class="btn" href="{{ route('usuarios.edit', $usuario->id) }}" title="Editar usuario">Editar</a>        
+                                      {!! Form::open(['method' => 'DELETE', 'route' => ['usuarios.destroy', $usuario->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $usuario->id]) !!}
+                                          {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $usuario->id . ')']) !!}
+                                        {!! Form::close() !!}
 
-                                    <td style=" display: flex; justify-content: space-between; gap: 10px; padding: 10px">
-                                      <a class="btn btn-info" href="{{ route('usuarios.edit',$usuario->id) }}" title="Editar usuario">Editar</a>
-
-                                      {!! Form::open(['method' => 'DELETE','route' => ['usuarios.destroy', $usuario->id],'style'=>'display:inline']) !!}
-                                          {!! Form::submit('Borrar', ['class' => 'btn btn-danger']) !!}
-                                      {!! Form::close() !!}
-                                    </td>
+                                        <script>
+                                            function confirmarEliminar(id) {
+                                                if (confirm('¿Estás seguro de eliminar este registro?')) {
+                                                    document.getElementById('deleteForm-' + id).submit();
+                                                    return true;
+                                                } else {
+                                                    return false;
+                                                }
+                                            }
+                                        </script>
+                                      </td>
                                   </tr>
                                 @endforeach
                               </tbody>

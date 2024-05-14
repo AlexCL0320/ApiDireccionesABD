@@ -18,7 +18,7 @@
                 <tr>
                   <th style="color: white;">No.</th>
                   <th style="color: white;">Nombre</th>
-                  <th style="color: white;">Acciones</th>
+                 <!-- <th style="color: white;">Acciones</th>-->
                 </tr>
               </thead>
               <tbody>
@@ -27,10 +27,10 @@
                 <tr>
                   <td>{{ $estado->id }}</td>
                   <td>{{ $estado->nombre_estado }}</td>
-                  <td style="padding: 10px">     
-                  <!--  <a style="background-color: #326565; color: white; margin-bottom: 0%;" class="btn" href="{{ route('estados.edit', $estado->id) }}" title="Editar estado">Editar</a> 
-                        -->  
-                  {!! Form::open(['method' => 'DELETE', 'route' => ['estados.destroy', $estado->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $estado->id]) !!}
+                  <!--<td style="padding: 10px">     
+                   <a style="background-color: #326565; color: white; margin-bottom: 0%;" class="btn" href="{{ route('estados.edit', $estado->id) }}" title="Editar estado">Editar</a> 
+                        
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['estados.destroy', $estado->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $estado->id]) !!}
                       {!! Form::submit('Eliminar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $estado->id . ')']) !!}
                     {!! Form::close() !!}
 
@@ -44,7 +44,7 @@
                             }
                         }
                     </script>
-                  </td>
+                  </td>-->
                 </tr>
                 @endforeach
               </tbody>

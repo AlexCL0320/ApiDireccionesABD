@@ -19,10 +19,10 @@
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
                  <tr>
-                  <th style="color: white;">Estado</th>
-                  <th style="color: white;">No. Municipio</th>
-                  <th style="color: white;">Nombre</th>
-                  <th style="color: white;">Acciones</th>
+                  <th style="color: white; width: 30%;">Estado</th>
+                  <th style="color: white; width: 20%">No. Municipio</th>
+                  <th style="color: white; width: 50%">Nombre</th>
+                  <!--<th style="color: white;">Acciones</th>-->
                 </tr>
               </thead>
               <tbody>
@@ -32,8 +32,8 @@
                   <td>{{ $municipio->n_e }}</td>
                   <td>{{ $municipio->id }}</td>
                   <td>{{ $municipio->n_m }}</td>
-                  <td style="padding: 10px">     
-                   <!-- <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('municipios.edit', $municipio->id) }}" title="Editar estado">Editar</a> -->
+                  <!--<td style="padding: 10px">     
+                    <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('municipios.edit', $municipio->id) }}" title="Editar estado">Editar</a>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['municipios.destroy', $municipio->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $municipio->id]) !!}
                       {!! Form::submit('Eliminar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $municipio->id . ')']) !!}
                     {!! Form::close() !!}
@@ -48,7 +48,7 @@
                             }
                         }
                     </script>
-                  </td>
+                  </td>-->
                 </tr>
                 @endforeach
               </tbody>
@@ -70,8 +70,8 @@
   // Inicializamos el DataTable en la tabla
   $('#miTabla').DataTable({
     lengthMenu: [
-      [10, 20, 40],
-      [10, 20, 40]
+      [100, 200, 400],
+      [100, 200, 400]
     ],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',

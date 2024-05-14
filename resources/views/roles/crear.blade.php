@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Crear Rol</h3>
+        <h3 style="color: black; class="page__heading">Crear Rol</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -44,8 +44,8 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar</button>
-                        <a href="/roles" class="btn btn-warning">Cancelar</a>
+                        <button style="background-color: #326565; color: white" type="submit" class="btn">Guardar</button>
+                        <a href="/roles" class="btn btn-danger">Cancelar</a>
                         {!! Form::close() !!}
                         </div>
                     </div>

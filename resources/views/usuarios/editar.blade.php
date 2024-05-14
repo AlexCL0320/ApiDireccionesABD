@@ -1,9 +1,13 @@
 @extends('layouts.app')
-
+<style>
+    .uppercase-input {
+    text-transform: uppercase;
+}
+</style>
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h3 class="page__heading">Editar Usuario</h3>
+            <h3 style="color:black" class="page__heading">Editar Usuario</h3>
         </div>
         <div class="section-body">
             <div class="row">
@@ -28,7 +32,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="name">Nombre</label><span class="required text-danger">*</span>
-                                    {!! Form::text('name', null, array('class' => 'form-control')) !!}
+                                    {!! Form::text('name', null, array('class' => 'form-control uppercase-input')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -56,8 +60,8 @@
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
-                                <a href="/usuarios" class="btn btn-warning">Cancelar</a>
+                                <button style="background-color: #326565; color:white" type="submit" class="btn">Guardar</button>
+                                <a href="/usuarios" class="btn btn-danger">Cancelar</a>
                             </div>
                         </div>
                         {!! Form::close() !!}

@@ -61,6 +61,7 @@ class UsuarioController extends Controller
         ]);
     
         $input = $request->all();
+        $input['name'] = strtoupper($input['name']);
         $input['password'] = Hash::make($input['password']);
     
         $user = User::create($input);
@@ -113,6 +114,7 @@ class UsuarioController extends Controller
         ]);
     
         $input = $request->all();
+        $input['name'] = strtoupper($input['name']);
         if(!empty($input['password'])){ 
             $input['password'] = Hash::make($input['password']);
         }else{
