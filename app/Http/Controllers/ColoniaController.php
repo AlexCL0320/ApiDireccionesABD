@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Colonia;
 use App\Models\Municipio;
-
+use App\Models\Estado;
 class ColoniaController extends Controller
 {
     /**
@@ -23,9 +23,28 @@ class ColoniaController extends Controller
         ->whereColumn('municipios.estado_id', '=', 'estados.id')
         ->whereColumn('colonias.estado_id', '=', 'estados.id')
         ->get();
-        return view('colonias.index', compact('colonias'));
+        $estados = Estado::all();
+        return view('colonias.index', compact('colonias', 'estados'));
     }
 
+    public function obtener_mun($id)
+    {
+        $municipios = Municipio::where('estado_id','=', $id)
+            ->get();        
+        return $municipios;
+    }
+    public function filtro_estado($id)
+    {
+        $colonias = Colonia::query()
+            ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id')
+            ->where('municipios.estado_id', '=', $id)
+            ->where('colonias.estado_id', '=', $id)
+            ->get();
+        return response()->json($colonias);
+    }
+    
     /**
      * Muestra el formulario para crear un nuevo estado.
      *
@@ -36,7 +55,6 @@ class ColoniaController extends Controller
         // Mostrar el formulario de creación de estado
         $municipios = Municipio::pluck('nombre', 'nombre');
         return view('colonias.crear', compact('municipios'));
-
     }
 
     /**

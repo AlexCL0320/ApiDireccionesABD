@@ -9,6 +9,7 @@
         use App\Models\Direccion;
         use App\Models\CodigoPostal;
         $cant_usuarios = User::count(); 
+        $cant_roles = Role::count();
         $cant_estados = Estado::count();
         $cant_municipios = Municipio::count();
         $cant_colonias = Colonia::count();
@@ -37,6 +38,7 @@
                                                                 <div class="d-flex align-items-center">
                                                                     <img src="{{ asset('img/iconos_side_bar/user.png') }}" alt="icono_usuario2" width="80" height="90" class="mr-3">
                                                                     <h5 class="m-0" style="color: black;">Usuarios</h5>
+                                                                    <h5  style="margin-top: 20%; margin-bottom: 0%; color:black"class="ml-auto">{{$cant_usuarios}}</h5>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -51,6 +53,7 @@
                                                                 <div class="d-flex align-items-center">
                                                                     <img src="{{ asset('img/iconos_side_bar/rol.png') }}" alt="roles" width="90" height="90" class="mr-3">
                                                                     <h5 class="m-0" style="color: black;">Roles</h5>
+                                                                    <h5  style="margin-top: 20%; margin-bottom: 0%; color:black"class="ml-auto">{{$cant_roles}}</h5>
                                                                 </div>
                                                             </div>
                                                         </div>

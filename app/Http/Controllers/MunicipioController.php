@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Municipio;
+use App\Models\Estado;
 
 class MunicipioController extends Controller
 {
@@ -20,7 +21,8 @@ class MunicipioController extends Controller
             ->select('estados.nombre_estado as n_e','municipios.nombre as n_m', 'municipios.id')
             ->orderByDesc('municipios.estado_id')
             ->get();
-        return view('municipios.index', compact('municipios'));
+            $estados = Estado::all();
+        return view('municipios.index', compact('municipios','estados'));
     }
 
     /**
@@ -73,6 +75,17 @@ class MunicipioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function filtro_municipio($id)
+    {
+        $municipios = Municipio::query()
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'municipios.id')
+            ->where('municipios.estado_id', '=', $id)
+            ->get();
+        return response()->json($municipios);
+    }
+
     public function edit($id)
     {
         // Obtener el municipio por su ID y pasarlo al formulario de edición

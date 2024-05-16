@@ -12,7 +12,7 @@
           <div class="card-body">
             <!-- Agregamos un enlace para crear un nuevo estado -->
            <!-- <a class="btn btn-warning" href="{{ route('estados.create') }}" title="Crear nuevo estado">Agregar estado</a>-->
-            <div><br></div>
+           <div><br></div>
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
                 <tr>

@@ -39,4 +39,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('municipios', MunicipioController::class);
     Route::resource('colonias', ColoniaController::class);
     Route::resource('direcciones', DireccionController::class);
+    Route::get('/colonias/obtener_mun/{id?}', [ColoniaController::class, 'obtener_mun'])->name('colonias.obtener_mun');
+    Route::post('/colonias/filtro_estado/{id?}', [ColoniaController::class, 'filtro_estado'])->name('colonias.filtro_estado');
+    Route::post('/municipios/filtro_municipio/{id?}', [MunicipioController::class, 'filtro_municipio'])->name('municipios.filtro_municipio');
 });
