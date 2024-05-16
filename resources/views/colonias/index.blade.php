@@ -33,11 +33,11 @@
             <!-- Creamos la tabla para mostrar los colonias -->
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
-                 <tr>
-                  <th style="color: white;">Estado</th>
-                  <th style="color: white;">Municipio</th>
+                 <tr>                
                   <th style="color: white;">No. Colonia</th>
                   <th style="color: white;">Nombre</th>
+                  <th style="color: white;">Estado</th>
+                  <th style="color: white;">Municipio</th>
                   <!--<th style="color: white;">Acciones</th>-->
                 </tr>
               </thead>
@@ -46,10 +46,10 @@
                 <!-- Iteramos sobre los colonias y los mostramos en la tabla -->
                 @foreach ($colonias as $colonia)
                 <tr class="estado_{{ $colonia->estado_id }}">
-                  <td>{{ $colonia->n_e }}</td>
-                  <td>{{ $colonia->n_m }}</td>
                   <td>{{ $colonia->id }}</td>
                   <td>{{ $colonia->n }}</td>
+                  <td>{{ $colonia->n_e }}</td>
+                  <td>{{ $colonia->n_m }}</td>
                   <!--<td style="padding: 10px">     
                    <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
                    {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $colonia->id]) !!}
@@ -158,7 +158,7 @@
 
     // Realizar una petición AJAX para obtener los datos filtrados
     $.ajax({
-        url: '/municipios/filtro_municipios/' + estado_id, // Actualizado para usar la ruta correcta
+        url: '/colonias/filtro_estado/' + estado_id, // Actualizado para usar la ruta correcta
         method: 'POST',
         data: { id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         success: function(response) {
@@ -166,10 +166,12 @@
             $('#miTabla tbody').empty();
             $i = 0;
             // Iterar sobre los datos recibidos y agregarlos a la tabla
-            $.each(response, function(index, municipio) {
+            $.each(response, function(index, colonia) {
                 var row = '<tr>' +
-                    '<td>' + municipio.n_e + '</td>' +
-                    '<td>' + municipio.n_m + '</td>' +
+                    '<td>' + colonia.id + '</td>' +
+                    '<td>' + colonia.n + '</td>' +
+                    '<td>' + colonia.n_e + '</td>' +
+                    '<td>' + colonia.n_m + '</td>' +
                     '</tr>';
                 $('#miTabla tbody').append(row);
                 $i++;

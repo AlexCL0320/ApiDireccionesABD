@@ -30,9 +30,9 @@
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
                  <tr>
-                  <th style="color: white; width: 30%;">Estado</th>
                   <th style="color: white; width: 20%">No. Municipio</th>
                   <th style="color: white; width: 50%">Nombre</th>
+                  <th style="color: white; width: 30%;">Estado</th>
                   <!--<th style="color: white;">Acciones</th>-->
                 </tr>
               </thead>
@@ -40,9 +40,9 @@
                 <!-- Iteramos sobre los municipios y los mostramos en la tabla -->
                 @foreach ($municipios as $municipio)
                 <tr>
-                  <td>{{ $municipio->n_e }}</td>
-                  <td>{{ $municipio->id }}</td>
                   <td>{{ $municipio->n_m }}</td>
+                  <td>{{ $municipio->id }}</td>
+                  <td>{{ $municipio->n_e }}</td>
                   <!--<td style="padding: 10px">     
                     <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('municipios.edit', $municipio->id) }}" title="Editar estado">Editar</a>
                     {!! Form::open(['method' => 'DELETE', 'route' => ['municipios.destroy', $municipio->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $municipio->id]) !!}

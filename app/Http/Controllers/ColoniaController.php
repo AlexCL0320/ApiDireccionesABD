@@ -38,9 +38,10 @@ class ColoniaController extends Controller
         $colonias = Colonia::query()
             ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-            ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id')
+            ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id', 'colonias.estado_id') // Agrega colonias.estado_id a la selección
             ->where('municipios.estado_id', '=', $id)
             ->where('colonias.estado_id', '=', $id)
+            ->orderBy('colonias.estado_id') // Ordena por colonias.estado_id
             ->get();
         return response()->json($colonias);
     }
