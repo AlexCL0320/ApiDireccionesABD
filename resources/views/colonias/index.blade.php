@@ -25,11 +25,15 @@
                     <option value="{{ $estado->id }}">{{ $estado->nombre_estado}}</option>
                 @endforeach
               </select>
-              <select style="width: 50%;" id="municipio" class="form-control">
+              <select style="width: 50%;" id="municipio" class="form-control" onchange="filtro_municipio(this)">
                   <option value="">----Selecciona Municipio----</option>
               </select>
             </div>
             <div><br></div>
+            <script>
+            // Imprimir el JSON de colonias en la consola
+            console.log(@json($colonias));
+            </script>
             <!-- Creamos la tabla para mostrar los colonias -->
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
@@ -42,7 +46,6 @@
                 </tr>
               </thead>
               <tbody>
-              @if(empty($selectedEstadoId))
                 <!-- Iteramos sobre los colonias y los mostramos en la tabla -->
                 @foreach ($colonias as $colonia)
                 <tr class="estado_{{ $colonia->estado_id }}">
@@ -69,7 +72,6 @@
                   </td>-->
                 </tr>
                 @endforeach
-                @endif
               </tbody>
             </table>
           </div>
@@ -95,7 +97,9 @@
     ],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
-    }
+    },
+    // Desactivar la ordenación inicial
+    "order": []
 
   });
 </script>
@@ -192,6 +196,47 @@
 }
 </script>
 
+<script>
+  function filtro_municipio() {
+    // Obtener el ID del estado seleccionado
+    var municipio_id = $('#municipio').val();
+    var estado_id = $('#estado').val();
+    console.log(municipio_id);
+
+    $.ajax({
+        url: '/colonias/filtro_municipio/' + municipio_id + '/' + estado_id, // Actualizado para incluir el estado_id en la URL
+        method: 'POST',
+        data: { id: municipio_id, estado_id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
+        success: function(response) {
+            // Limpiar la tabla
+            $('#miTabla tbody').empty();
+            $i = 0;
+            // Iterar sobre los datos recibidos y agregarlos a la tabla
+            $.each(response, function(index, colonia) {
+                var row = '<tr>' +
+                    '<td>' + colonia.id + '</td>' +
+                    '<td>' + colonia.n + '</td>' +
+                    '<td>' + colonia.n_e + '</td>' +
+                    '<td>' + colonia.n_m + '</td>' +
+                    '</tr>';
+                $('#miTabla tbody').append(row);
+                $i++;
+                console.log($i);
+            });
+
+            // Actualizar la configuración de la paginación
+            var newTotalRecords = $i; // Número total de registros después del filtro
+            $('#miTabla').DataTable().settings()[0]._iRecordsTotal = newTotalRecords;
+            $('#miTabla').DataTable().settings()[0]._iRecordsDisplay = newTotalRecords;
+            $('#miTabla').DataTable().draw(); // Redibujar la tabla con la nueva configuración de paginación
+        },
+
+        error: function(xhr, status, error) {
+            console.error('Error al obtener datos:', error);
+        }
+    });
+}
+</script>
 
 
 @endsection

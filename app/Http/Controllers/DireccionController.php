@@ -102,4 +102,6 @@ class DireccionController extends Controller
         return redirect()->route('direcciones.index');
     }
 
+    public function()
+
 }

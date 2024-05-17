@@ -18,14 +18,22 @@
             <label for="estado"><h6>Estado</h6></label>
             <br>
             <div>
-              <select stye="width: 20%" id="estado" class="form-control" onchange="filtro_estado(this)">
-                <option value="">----Selecciona estado----</option>
+            <select style="width: 20%" id="estado" class="form-control" onchange="filtro_estado(this)">
+              <option value="">----Selecciona estado----</option>
                 @foreach($estados as $estado)
-                    <option value="{{ $estado->id }}">{{ $estado->nombre_estado}}</option>
-                @endforeach
-              </select>
+                    <option value="{{ $estado->id }}">{{ $estado->nombre_estado}}
+              </option>
+              @endforeach
+            </select>
             </div>
             <div><br></div>
+            <script>
+            // Imprimir el JSON de colonias en la consola
+            console.log(@json($municipios));
+            </script>
+            @php
+            $primerElementoSeleccionado = false; // Asigna un valor a la variable
+            @endphp
             <!-- Creamos la tabla para mostrar los municipios -->
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
@@ -36,12 +44,12 @@
                   <!--<th style="color: white;">Acciones</th>-->
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="tablaBody">
                 <!-- Iteramos sobre los municipios y los mostramos en la tabla -->
                 @foreach ($municipios as $municipio)
                 <tr>
-                  <td>{{ $municipio->n_m }}</td>
                   <td>{{ $municipio->id }}</td>
+                  <td>{{ $municipio->n_m }}</td>
                   <td>{{ $municipio->n_e }}</td>
                   <!--<td style="padding: 10px">     
                     <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('municipios.edit', $municipio->id) }}" title="Editar estado">Editar</a>
@@ -78,6 +86,25 @@
 <!-- BOOTSTRAP -->
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
+<script>
+    $(document).ready(function() {
+       window.primerElementoSeleccionado = false;
+
+        $('#estado').on('change', function() {
+            var valorSeleccionado = $(this).val();
+            var primerElemento = $(this).find('option:first').val();
+
+            if (valorSeleccionado === primerElemento) {
+                primerElementoSeleccionado = true;
+            } else {
+                primerElementoSeleccionado = false;
+            }
+        });
+
+        // Ahora puedes usar la variable primerElementoSeleccionado para saber si se ha seleccionado el primer elemento
+    });
+</script>
+
 <!--Script para filtrar los elementos de la tabla en base al desplegable-->
 <script>
   function filtro_estado() {
@@ -96,9 +123,9 @@
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, municipio) {
                 var row = '<tr>' +
-                    '<td>' + municipio.n_e + '</td>' +
                     '<td>' + municipio.id + '</td>' +
                     '<td>' + municipio.n_m + '</td>' +
+                    '<td>' + municipio.n_e + '</td>' +
                     '</tr>';
                 $('#miTabla tbody').append(row);
                 $i++;
@@ -110,6 +137,11 @@
             $('#miTabla').DataTable().settings()[0]._iRecordsTotal = newTotalRecords;
             $('#miTabla').DataTable().settings()[0]._iRecordsDisplay = newTotalRecords;
             $('#miTabla').DataTable().draw(); // Redibujar la tabla con la nueva configuración de paginación
+
+            // Destruir la instancia existente del DataTable y reinstalarla para reflejar los nuevos datos
+            $('#miTabla').DataTable().destroy();
+            $('#miTabla').DataTable();
+
         },
 
         error: function(xhr, status, error) {
@@ -129,7 +161,9 @@
     ],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
-    }
+    },
+    // Desactivar la ordenación inicial
+    "order": []
   });
 </script>
 @endsection

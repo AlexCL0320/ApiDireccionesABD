@@ -16,6 +16,7 @@ class ColoniaController extends Controller
     public function index()
     {        
         // Obtener todos los estados y pasarlos a la vista
+        $estados = Estado::all();
         $colonias = Colonia::query()
         ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
         ->join('estados', 'municipios.estado_id', '=', 'estados.id')
@@ -23,7 +24,6 @@ class ColoniaController extends Controller
         ->whereColumn('municipios.estado_id', '=', 'estados.id')
         ->whereColumn('colonias.estado_id', '=', 'estados.id')
         ->get();
-        $estados = Estado::all();
         return view('colonias.index', compact('colonias', 'estados'));
     }
 
@@ -41,11 +41,23 @@ class ColoniaController extends Controller
             ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id', 'colonias.estado_id') // Agrega colonias.estado_id a la selección
             ->where('municipios.estado_id', '=', $id)
             ->where('colonias.estado_id', '=', $id)
-            ->orderBy('colonias.estado_id') // Ordena por colonias.estado_id
             ->get();
         return response()->json($colonias);
     }
     
+    public function filtro_municipio($id, $id_e)
+    { 
+       $colonias = Colonia::query()
+            ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id', 'colonias.estado_id') // Agrega colonias.estado_id a la selección
+            ->where('municipios.estado_id', '=', $id_e)
+            ->where('colonias.estado_id', '=', $id_e)
+            ->where('municipios.id', '=', $id)
+            ->where('colonias.municipio_id', '=', $id)
+            ->get();
+        return response()->json($colonias);
+    }
     /**
      * Muestra el formulario para crear un nuevo estado.
      *

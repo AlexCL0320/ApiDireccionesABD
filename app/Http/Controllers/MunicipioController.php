@@ -19,7 +19,6 @@ class MunicipioController extends Controller
         $municipios = Municipio::query()
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
             ->select('estados.nombre_estado as n_e','municipios.nombre as n_m', 'municipios.id')
-            ->orderByDesc('municipios.estado_id')
             ->get();
             $estados = Estado::all();
         return view('municipios.index', compact('municipios','estados'));
