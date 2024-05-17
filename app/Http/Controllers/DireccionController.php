@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Direccion;
-
+use Illuminate\Support\Facades\Auth;
 class DireccionController extends Controller
 {
        /**
@@ -25,7 +25,8 @@ class DireccionController extends Controller
      */
     public function create()
     {
-        return view('direcciones.crear');
+        $user = Auth::user(); // Obtén el usuario logueado
+        return view('direcciones.crear', compact('user'));
     }
 
     /**
@@ -102,6 +103,5 @@ class DireccionController extends Controller
         return redirect()->route('direcciones.index');
     }
 
-    public function()
 
 }

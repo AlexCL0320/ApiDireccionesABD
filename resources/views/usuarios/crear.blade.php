@@ -37,6 +37,18 @@
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
+                                    <label for="name">Apellido Paterno</label><span class="required text-danger">*</span>
+                                    {!! Form::text('apellido_p', null, array('class' => 'form-control uppercase-input')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="name">Apellido Materno</label><span class="required text-danger"></span>
+                                    {!! Form::text('apellido_m', null, array('class' => 'form-control uppercase-input')) !!}
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
                                     <label for="email">Correo electronico</label><span class="required text-danger">*</span>
                                     {!! Form::text('email', null, array('class' => 'form-control')) !!}
                                 </div>

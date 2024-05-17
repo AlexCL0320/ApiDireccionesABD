@@ -31,71 +31,70 @@
 
                         {!! Form::open(array('route' => 'direcciones.store','method'=>'POST')) !!}
                         <!-- Otros campos del formulario -->
-
-                        <!-- Campo oculto para pasar el ID de la categoría -->
-                        {!! Form::hidden('categoria_id', $categoria->id) !!}
-
                         
                             <div class="row">
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label  for="nombre">Nombre</label><span class="required text-danger">*</span>
-                                    {!! Form::text('nombre', null, array('class' => 'form-control uppercase-input')) !!}
+                                    <label for="name">Nombre</label><span class="required text-danger">*</span>
+                                    {!! Form::text('name', $user->name, array('class' => 'form-control uppercase-input', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="marca">Marca</label><span class="required text-danger">*</span>
-                                    {!! Form::text('marca', null, array('class' => 'form-control uppercase-input')) !!}
+                                    <label for="a_p_lbl">Apellido Paterno</label><span class="required text-danger">*</span>
+                                    {!! Form::text('apellido_p', $user->apellido_p, array('class' => 'form-control uppercase-input', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="stock">Stock</label><span class="required text-danger">*</span>
-                                    {!! Form::number('stock', null, array('class' => 'form-control uppercase-input', 'id' => 'stock')) !!}
-                                </div>
-                            </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="descripcion">Descripcion</label><span class="required text-danger"></span>
-                                    {!! Form::text('descripcion', null, array('class' => 'form-control uppercase-input')) !!}
+                                    <label for="a_m_lbl">Apellido Materno</label><span class="required text-danger"></span>
+                                    {!! Form::text('apellido_m', $user->apellido_m, array('class' => 'form-control uppercase-input','readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="precio_compra">Precio Compra</label><span class="required text-danger">*</span>
-                                    {!! Form::number('precio_compra', null, array('class' => 'form-control uppercase-input', 'step' => 'any')) !!}
-                                </div>
-                            </div>
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-                                    <label for="precio_venta">Precio venta</label><span class="required text-danger">*</span>
-                                    {!! Form::number('precio_venta', null, array('class' => 'form-control uppercase-input', 'step' => 'any')) !!}
+                                    <label for="cp_lbl">Código Postal</label><span class="required text-danger">*</span>
+                                    {!! Form::text('cp', null, ['class' => 'form-control', 'id' => 'cp', 'maxlength' => 5, 'oninput' => 'limitInputLength(this, 5)']) !!}
                                 </div>
                             </div>
 
+                            <div class="d-flex align-items-center" >
+                                <div class="d-flex align-items-center" style= "margin-left: 3%; margin-bottom: 15%" >
+                                    <label for="nombre">Estado</label><span class="required text-danger">*</span>
+                                    <label style= "margin-left: 208%;"for="nombre">Municipio</label><span class="required text-danger">*</span>
+                                </div>
+                                    <select style="width: 50%; margin-left: -20.5%; margin-right: 5%; margin-top:0%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">    
+                                        <option value="">----Selecciona Estado----</option>
+                                    </select>
+                                    <select style="width: 50%; margin-top:0%" id="municipio" class="form-control" onchange="filtro_municipio(this)">
+                                        <option value="">----Selecciona Municipio----</option>
+                                    </select>
+                            </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="codigo">Código</label><span class="required text-danger">*</span>
-                                    {!! Form::number('codigo', null, array('class' => 'form-control uppercase-input')) !!}
+                                    <label for="calle_lbl">Calle</label><span class="required text-danger">*</span>
+                                    {!! Form::text('calle', null, array('class' => 'form-control uppercase-input')) !!}
+                                </div>
+                            </div>                            
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <label for="n_e_lbl">No. Exterior</label><span class="required text-danger">*</span>
+                                    {!! Form::number('numero_ex', null, array('class' => 'form-control uppercase-input')) !!}
                                 </div>
                             </div>
-
-
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
-                                    <label for="categoria">Categoria</label><span class="required text-danger">*</span>
-                                {!! Form::select('categoria', [$categoria->nombre], null, ['class' => 'form-control']) !!}
+                                    <label for="n_i_lbl">No. Interior</label>
+                                    {!! Form::number('numero_int', null, array('class' => 'form-control uppercase-input')) !!}
+                                </div>
                             </div>
                         </div>
-
-                            
-                            <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div style="margin-top: 2%;" class="col-xs-12 col-sm-12 col-md-12">
                                 <button style="background-color: #326565; color:white" type="submit" class="btn">Guardar</button>
-                                <a href="{{ route('insumos.index', $categoria->id) }}" class="btn btn-danger">Cancelar</a>
+                                <a href="/direcciones" class="btn btn-danger">Cancelar</a>
                             </div>
                         </div>
+                        
                         
                         {!! Form::close() !!}
                         </div>
@@ -106,3 +105,34 @@
 </section>
 @endsection
 
+<!--Script para  validar la entrada maxima del codigo postal-->
+<script>
+    function limitInputLength(element, maxLength) {
+        if (element.value.length > maxLength) {
+            element.value = element.value.slice(0, maxLength);
+        }
+        if (element.value.length === maxLength) {
+            buscarDatos(element.value);
+        }
+    }
+
+    function buscarDatos(codigoPostal) {
+        // Realizar una petición AJAX al controlador ColoniasController
+        $.ajax({
+            url: '/colonias/buscar_datos', // Ruta al método del controlador
+            method: 'POST',
+            data: {
+                _token: '{{ csrf_token() }}', 
+                codigo_postal: codigoPostal 
+            },
+            success: function(response) {
+                console.log(@json(response));
+
+            },
+            error: function(xhr, status, error) {
+                console.error('Error al buscar datos:', error);
+            }
+        });
+    }
+</script>
+</script>

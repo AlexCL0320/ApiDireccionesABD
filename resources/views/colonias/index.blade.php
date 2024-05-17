@@ -38,10 +38,11 @@
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
                  <tr>                
-                  <th style="color: white;">No. Colonia</th>
-                  <th style="color: white;">Nombre</th>
-                  <th style="color: white;">Estado</th>
-                  <th style="color: white;">Municipio</th>
+                  <th style="color: white; width: 5%">No. Colonia</th>
+                  <th style="color: white; width: 30%">Nombre</th>
+                  <th style="color: white; width: 20%">Estado</th>
+                  <th style="color: white; width: 20%">Municipio</th>
+                  <th style="color: white; width: 25%">Ubicacion</th>
                   <!--<th style="color: white;">Acciones</th>-->
                 </tr>
               </thead>
@@ -53,6 +54,7 @@
                   <td>{{ $colonia->n }}</td>
                   <td>{{ $colonia->n_e }}</td>
                   <td>{{ $colonia->n_m }}</td>
+                  <td>{{ $colonia->u }}</td>
                   <!--<td style="padding: 10px">     
                    <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
                    {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $colonia->id]) !!}

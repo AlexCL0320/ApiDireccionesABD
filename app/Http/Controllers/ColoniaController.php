@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CodigoPostal;
+use App\Models\ColoniaPostal;
 use Illuminate\Http\Request;
 use App\Models\Colonia;
 use App\Models\Municipio;
@@ -20,7 +22,8 @@ class ColoniaController extends Controller
         $colonias = Colonia::query()
         ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
         ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-        ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id')
+        ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m',
+                 'colonias.nombre as n', 'colonias.id', 'colonias.ubicacion as u')
         ->whereColumn('municipios.estado_id', '=', 'estados.id')
         ->whereColumn('colonias.estado_id', '=', 'estados.id')
         ->get();
@@ -58,6 +61,27 @@ class ColoniaController extends Controller
             ->get();
         return response()->json($colonias);
     }
+
+    public function buscar_datos($cp){
+        $codigoPostal = CodigoPostal::where('codigo_postal', $cp)->first();
+
+        if (!$codigoPostal) {
+            return response()->json(['error' => 'Código postal no encontrado'], 404);
+        }
+        $id_cp = $codigoPostal->id;
+
+        $datos = ColoniaPostal::query()
+        ->join('colonias', 'coloniapostals.colonia_id', '=', 'colonias.id')
+        ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+        ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+        ->select(
+            'estados.nombre as n_e', 'estados.id as i_e', 
+            'municipios.nombre as n_m','municipios.id as i_m',
+            'colonias.nombre as n_c', 'colonias.id as i_c') 
+        ->where('coloniaspostals.codigo_postal_id', $id_cp)
+        ->get();
+    return response()->json($datos);
+    }
     /**
      * Muestra el formulario para crear un nuevo estado.
      *
@@ -65,9 +89,10 @@ class ColoniaController extends Controller
      */
     public function create()
     {
+        $estados = Estado::all();
         // Mostrar el formulario de creación de estado
         $municipios = Municipio::pluck('nombre', 'nombre');
-        return view('colonias.crear', compact('municipios'));
+        return view('colonias.crear', compact('municipios', 'estados'));
     }
 
     /**

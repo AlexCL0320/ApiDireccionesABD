@@ -30,6 +30,8 @@
                               <thead style="background-color:#326F8A">
                                   <th style="display: none;">ID</th>
                                   <th style="color:#fff;">Nombre</th>
+                                  <th style="color:#fff;">Apellido Paterno</th>
+                                  <th style="color:#fff;">Apellido Materno</th>
                                   <th style="color:#fff;">Correo</th>
                                   <th style="color:#fff;">Rol</th>
                                   <th style="color:#fff;">Acciones</th>
@@ -39,6 +41,8 @@
                                   <tr>
                                     <td style="display: none;">{{ $usuario->id }}</td>
                                     <td>{{ $usuario->name }}</td>
+                                    <td>{{ $usuario->apellido_p }}</td>
+                                    <td>{{ $usuario->apellido_m }}</td>
                                     <td>{{ $usuario->email }}</td>
                                     <td style="align-items: center;">
                                       @if(!empty($usuario->getRoleNames()))

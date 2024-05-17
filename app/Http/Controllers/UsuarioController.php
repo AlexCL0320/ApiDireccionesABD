@@ -55,6 +55,7 @@ class UsuarioController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'apellido_p' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'roles' => 'required'
@@ -62,6 +63,8 @@ class UsuarioController extends Controller
     
         $input = $request->all();
         $input['name'] = strtoupper($input['name']);
+        $input['apellido_p'] = strtoupper($input['apellido_p']);
+        $input['apellido_m'] = strtoupper($input['apellido_m']);
         $input['password'] = Hash::make($input['password']);
     
         $user = User::create($input);
@@ -108,6 +111,7 @@ class UsuarioController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
+            'apellido_p' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
             'roles' => 'required'
@@ -115,6 +119,8 @@ class UsuarioController extends Controller
     
         $input = $request->all();
         $input['name'] = strtoupper($input['name']);
+        $input['apellido_p'] = strtoupper($input['apellido_p']);
+        $input['apellido_m'] = strtoupper($input['apellido_m']);
         if(!empty($input['password'])){ 
             $input['password'] = Hash::make($input['password']);
         }else{

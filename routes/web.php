@@ -42,5 +42,6 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/colonias/obtener_mun/{id?}', [ColoniaController::class, 'obtener_mun'])->name('colonias.obtener_mun');
     Route::post('/colonias/filtro_estado/{id?}', [ColoniaController::class, 'filtro_estado'])->name('colonias.filtro_estado');
     Route::post('/colonias/filtro_municipio/{id}/{id_e}', [ColoniaController::class, 'filtro_municipio'])->name('colonias.filtro_municipio');
+    Route::post('/colonias/buscar_datos/{cp?}', [ColoniaController::class, 'buscar_datos'])->name('colonias.buscar_datos');
     Route::post('/municipios/filtro_municipio/{id?}', [MunicipioController::class, 'filtro_municipio'])->name('municipios.filtro_municipio');
 });
