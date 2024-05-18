@@ -23,7 +23,7 @@
             @endcan
             <br><br>
              <!-- Elementos de filtrado-->
-           <label style="font-family: Nunito; font-size: 13.5px; color:black; margin-right: 20.5%;" for="estado">Estado</label>
+           <label style="font-family: Nunito; font-size: 13.5px; color:black; margin-right: 21.2%;" for="estado">Estado</label>
            <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Municipio</label>
            <div class="d-flex align-items-center">
               <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">
@@ -32,7 +32,7 @@
                     <option value="{{ $estado->id }}">{{ $estado->nombre_estado}}</option>
                 @endforeach
               </select>
-              <select style="width: 50%; background-color: #CC7634; color:white; border-color: #CC7634; " id="municipio" class="form-control" onchange="filtro_municipio(this)">
+              <select style="width: 50%; background-color: #DAA520; color:white; border-color: #DAA520; " id="municipio" class="form-control" onchange="filtro_municipio(this)">
                   <option value="">----Selecciona Municipio----</option>
               </select>
             </div>
@@ -42,7 +42,7 @@
               <select style="width: 10%; height: 37px; background-color:#268196; color:white; border-color: #268196; " id="cp" class="form-control" onchange="">
                   <option value="">---CP---</option>
               </select>
-              <a style="background-color: #457766; width: 10%; margin-left: 3%; color: white;" class="btn" href="{{ route('colonias.index') }}" title="Todos">Todos</a>            
+              <a style="background-color: #457766; font-size: 13.5; font-family: nunito; width: 10%; margin-left: 3%; color: white;" class="btn" href="{{ route('colonias.index') }}" title="Todos">Limpiar</a>            
             </div>
             <br><br>
             <script>

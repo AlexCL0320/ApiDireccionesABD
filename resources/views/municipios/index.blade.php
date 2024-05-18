@@ -24,7 +24,7 @@
               </option>
               @endforeach
             </select>
-            <a style="background-color: #457766; color: white; margin-left: 31.3%; width: 15.8%" class="btn" href="{{ route('municipios.index') }}" title="Todos">---- Todos ----</a>
+            <a style="background-color: #457766; font-size: 13.5; font-family: nunito; color: white; margin-left: 31.3%; width: 15.8%" class="btn" href="{{ route('municipios.index') }}" title="Todos">Limpiar</a>
             </div>
             <div><br></div>
             <script>
