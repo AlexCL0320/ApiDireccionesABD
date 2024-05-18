@@ -54,7 +54,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="cp_lbl">Código Postal</label><span class="required text-danger">*</span>
-                                    {!! Form::text('cp', null, ['class' => 'form-control', 'id' => 'cp', 'maxlength' => 5, 'oninput' => 'limitInputLength(this, 5)']) !!}
+                                    {!! Form::text('codigo_postal', null, ['class' => 'form-control', 'id' => 'cp', 'maxlength' => 5, 'oninput' => 'limitInputLength(this, 5)']) !!}
                                 </div>
                             </div>
 
@@ -119,20 +119,19 @@
     function buscarDatos(codigoPostal) {
         // Realizar una petición AJAX al controlador ColoniasController
         $.ajax({
-            url: '/colonias/buscar_datos', // Ruta al método del controlador
+            url: '{{ route('colonias.buscar_datos') }}', // Usar el nombre de la ruta
             method: 'POST',
             data: {
-                _token: '{{ csrf_token() }}', 
-                codigo_postal: codigoPostal 
+                _token: '{{ csrf_token() }}',
+                codigo_postal: codigoPostal
             },
             success: function(response) {
-                console.log(@json(response));
-
+                console.log('Datos recibidos:', response);
             },
             error: function(xhr, status, error) {
                 console.error('Error al buscar datos:', error);
+                console.error(xhr.responseText); // Imprime la respuesta del servidor
             }
         });
     }
-</script>
 </script>

@@ -82,6 +82,7 @@ class MunicipioController extends Controller
             ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'municipios.id')
             ->where('municipios.estado_id', '=', $id)
             ->get();
+        
         return response()->json($municipios);
     }
 

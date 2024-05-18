@@ -15,16 +15,16 @@
             <!--<a class="btn btn-warning" href="{{ route('municipios.create') }}" title="Crear nuevo municipio">Agregar municipio</a>-->
             @endcan
              <!-- Elementos de filtrado-->
-            <label for="estado"><h6>Estado</h6></label>
-            <br>
-            <div>
-            <select style="width: 20%" id="estado" class="form-control" onchange="filtro_estado(this)">
+            <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Estado</label>
+            <div class="d-flex align-items-center">
+            <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  " id="estado" class="form-control" onchange="filtro_estado(this)">
               <option value="">----Selecciona estado----</option>
                 @foreach($estados as $estado)
                     <option value="{{ $estado->id }}">{{ $estado->nombre_estado}}
               </option>
               @endforeach
             </select>
+            <a style="background-color: #457766; color: white; margin-left: 31.3%; width: 15.8%" class="btn" href="{{ route('municipios.index') }}" title="Todos">---- Todos ----</a>
             </div>
             <div><br></div>
             <script>

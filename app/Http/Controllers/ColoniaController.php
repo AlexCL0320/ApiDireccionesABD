@@ -22,8 +22,11 @@ class ColoniaController extends Controller
         $colonias = Colonia::query()
         ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
         ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+        ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
+        ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
         ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m',
-                 'colonias.nombre as n', 'colonias.id', 'colonias.ubicacion as u')
+                 'colonias.nombre as n', 'colonias.id',
+                 'codigo_postals.codigo as c')
         ->whereColumn('municipios.estado_id', '=', 'estados.id')
         ->whereColumn('colonias.estado_id', '=', 'estados.id')
         ->get();
@@ -62,26 +65,34 @@ class ColoniaController extends Controller
         return response()->json($colonias);
     }
 
-    public function buscar_datos($cp){
-        $codigoPostal = CodigoPostal::where('codigo_postal', $cp)->first();
-
+    public function buscar_datos(Request $request) {
+        $cp = $request->codigo_postal;
+        $codigoPostal = CodigoPostal::where('codigo', $cp)->first();
         if (!$codigoPostal) {
             return response()->json(['error' => 'Código postal no encontrado'], 404);
         }
+        //Obtenemos el id del codigo postal
         $id_cp = $codigoPostal->id;
 
-        $datos = ColoniaPostal::query()
-        ->join('colonias', 'coloniapostals.colonia_id', '=', 'colonias.id')
-        ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
-        ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-        ->select(
-            'estados.nombre as n_e', 'estados.id as i_e', 
-            'municipios.nombre as n_m','municipios.id as i_m',
-            'colonias.nombre as n_c', 'colonias.id as i_c') 
-        ->where('coloniaspostals.codigo_postal_id', $id_cp)
-        ->get();
-    return response()->json($datos);
+        $id_col =  ColoniaPostal::query()
+            ->select('colonia_postals.colonia_id')
+            ->where('colonia_postals.codigo_postal_id','=', $id_cp)
+            ->get();
+    
+        $datos = Colonia::query()
+            ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->select(
+                'estados.nombre_estado as n_e', 'estados.id as i_e', 
+                'municipios.nombre as n_m', 'municipios.id as i_m',
+                'colonias.nombre as n_c', 'colonias.id as i_c')
+            ->whereColumn('municipios.estado_id', '=', 'estados.id')
+            ->whereColumn('colonias.estado_id', '=', 'estados.id')      
+            ->where('colonias.id', $id_col)
+            ->get();
+        return response()->json($datos);
     }
+    
     /**
      * Muestra el formulario para crear un nuevo estado.
      *

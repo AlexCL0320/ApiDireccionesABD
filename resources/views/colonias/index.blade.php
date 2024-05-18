@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+<style>
+    select#cp option:hover {
+        background-color: black;
+        color: white;
+    }
+</style>
+
 <section class="section">
   <div class="section-header">
       <h3 style="color:black" class="page__heading">Colonias</h3>
@@ -16,20 +23,28 @@
             @endcan
             <br><br>
              <!-- Elementos de filtrado-->
-           <label style="margin-right: 20.5%;" for="estado"><h6>Estado</h6></label>
-           <label for="estado"><h6>Municipio</h6></label>
+           <label style="font-family: Nunito; font-size: 13.5px; color:black; margin-right: 20.5%;" for="estado">Estado</label>
+           <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Municipio</label>
            <div class="d-flex align-items-center">
-              <select style="width: 20%; margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">
+              <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">
                 <option value="">----Selecciona Estado----</option>
                 @foreach($estados as $estado)
                     <option value="{{ $estado->id }}">{{ $estado->nombre_estado}}</option>
                 @endforeach
               </select>
-              <select style="width: 50%;" id="municipio" class="form-control" onchange="filtro_municipio(this)">
+              <select style="width: 50%; background-color: #CC7634; color:white; border-color: #CC7634; " id="municipio" class="form-control" onchange="filtro_municipio(this)">
                   <option value="">----Selecciona Municipio----</option>
               </select>
             </div>
-            <div><br></div>
+            <br>
+            <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">CP</label>
+            <div class="d-flex align-items-center">
+              <select style="width: 10%; height: 37px; background-color:#268196; color:white; border-color: #268196; " id="cp" class="form-control" onchange="">
+                  <option value="">---CP---</option>
+              </select>
+              <a style="background-color: #457766; width: 10%; margin-left: 3%; color: white;" class="btn" href="{{ route('colonias.index') }}" title="Todos">Todos</a>            
+            </div>
+            <br><br>
             <script>
             // Imprimir el JSON de colonias en la consola
             console.log(@json($colonias));
@@ -38,11 +53,12 @@
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
                  <tr>                
-                  <th style="color: white; width: 5%">No. Colonia</th>
+                  <th style="color: white; width: 2%">No.</th>
                   <th style="color: white; width: 30%">Nombre</th>
                   <th style="color: white; width: 20%">Estado</th>
                   <th style="color: white; width: 20%">Municipio</th>
-                  <th style="color: white; width: 25%">Ubicacion</th>
+                  <th style="color: white; width: 15%">CP</th>
+                  <th style="color: white; width: 3%">Ubicacion</th>
                   <!--<th style="color: white;">Acciones</th>-->
                 </tr>
               </thead>
@@ -54,7 +70,12 @@
                   <td>{{ $colonia->n }}</td>
                   <td>{{ $colonia->n_e }}</td>
                   <td>{{ $colonia->n_m }}</td>
-                  <td>{{ $colonia->u }}</td>
+                  <td>{{ $colonia->c }}</td>
+                  <td>
+                    <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="{{ route('colonias.index', $colonia->id) }}" title="Ubicacion">
+                    <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
+                    </a>
+                  </td>
                   <!--<td style="padding: 10px">     
                    <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
                    {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $colonia->id]) !!}
