@@ -56,6 +56,19 @@ class ColoniaController extends Controller
         return $municipios;
     }
     
+    //Obtiene los municipios pertenecientes a un estado
+    public function obtener_cp($id)
+    {
+        $cp = Colonia::query()
+        ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+        ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
+        ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
+        ->select('codigo_postals.codigo as c', 'codigo_postals.id')
+        ->where('municipios.id','=', $id)
+        ->get();
+
+        return $cp;
+    }
 
     //Funcion para filtrar las colonias pertenecientes a un estado especifico
     public function filtro_estado($id)

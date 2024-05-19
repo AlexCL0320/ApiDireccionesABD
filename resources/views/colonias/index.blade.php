@@ -170,6 +170,55 @@
   }
 </script>
 
+<!--Script para manipular la actualizacion del desplegable cp-->
+<script>
+  function filtro_cp(cps) {
+    //Obtenemos el id seleccionado desde el desplegable
+    let cp = cps.value;
+    //Llamos al metodo obtener_mun del controlador para consultar los municipios del estaado
+    fetch('/colonias/obtener_cp/' + id)
+      //Recuperamos la variable $cps de la consulta a la base de datos
+      .then(function(response) {
+        return response.json();
+      })
+      //Obtenemos el json de datos de la consulta
+      .then(function(jsonData) {
+       //console.log(jsonData); 
+       consultarCP(jsonData);
+      })
+      //Recuperamos el tipo de error y lo mostramos en la consola del navegador
+      .catch(function(error) {
+        console.error('Error al consultar los CP:', error);
+      });
+       
+      //Funcion para rellenar el desplegable de cp
+      function consultarCP(jsonData){
+        //Obtenemos el desplegable de cp en base a su id
+        let cp = document.getElementById('cp') 
+        //Llamamos a la funcion de limpieza del desplegable para evitar acummular cp de estados diferentes
+        limpiar_cp(cp);
+        //Recorremos el json de datos
+        jsonData.forEach(function(cp){
+          //Creamos una opcion para el desplegable
+          let op_cp = document.createElement('option');
+          //Rellenamos con el id del municipio
+          op_cp.value = cp.id;
+          //Rellenamos con el nombre del municipio
+          op_cp.innerHTML = cp.codigo;
+          //Agregamos la opcion al desplegable
+          cp.append(op_cp);
+        });
+      }
+
+      //Funcion para limpiar los elementos previos del select 
+      function limpiar_cp(des_cp){
+        while(des_cp.options.length >1){
+          des_cp.remove(1);
+        }
+      }
+  }
+</script>
+
 <!--Script para filtrar los elementos de la tabla en base al desplegable-->
 <script>
   function filtro_estado() {
