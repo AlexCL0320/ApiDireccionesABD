@@ -189,10 +189,11 @@
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
                 var row = '<tr>' +
-                    '<td>' + colonia.id + '</td>' +
+                    '<td>' + colonia.no + '</td>' +
                     '<td>' + colonia.n + '</td>' +
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
+                    '<td>' + colonia.c + '</td>' +
                     '</tr>';
                 $('#miTabla tbody').append(row);
                 $i++;
@@ -231,10 +232,11 @@
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
                 var row = '<tr>' +
-                    '<td>' + colonia.id + '</td>' +
+                    '<td>' + colonia.no + '</td>' +
                     '<td>' + colonia.n + '</td>' +
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
+                    '<td>' + colonia.c + '</td>' +
                     '</tr>';
                 $('#miTabla tbody').append(row);
                 $i++;

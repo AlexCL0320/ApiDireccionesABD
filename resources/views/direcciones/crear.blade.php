@@ -36,7 +36,7 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="name">Nombre</label><span class="required text-danger">*</span>
-                                    {!! Form::text('name', $user->name, array('class' => 'form-control uppercase-input', 'readonly')) !!}
+                                    {!! Form::text('nombre', $user->nombre, array('class' => 'form-control uppercase-input', 'readonly')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
