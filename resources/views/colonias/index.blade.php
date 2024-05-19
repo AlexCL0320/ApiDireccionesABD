@@ -23,35 +23,45 @@
               <a class="btn btn-warning" href="{{ route('colonias.create') }}" title="Crear nuevo colonia">Agregar colonia</a>            
               <br><br>
             @endcan
-            <!-- Elementos de filtrado-->
-            <label style="font-family: Nunito; font-size: 13.5px; color:black; margin-right: 21.2%;" for="estado">Estado</label>
-            <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Municipio</label>
-            <div class="d-flex align-items-center">
-                <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">
-                  <option value="">----Selecciona Estado----</option>
-                  @foreach($estados as $estado)
-                      <option value="{{ $estado->id }}">{{ $estado->nombre}}</option>
-                  @endforeach
-                </select>
-                <select style="width: 50%; background-color: #DAA520; color:white; border-color: #DAA520; " id="municipio" class="form-control" onchange="filtro_municipio(this)">
-                    <option value="">----Selecciona Municipio----</option>
-                </select>
+            <div  class="card">
+              <div  class="card-header" style="background-color: black; margin-bottom: -20px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);">
+              <strong><p style="font-size: 16px; font-family: nunito; color: White; margin-top: -10px;" class="card-title">Filtros de Busqueda</p></strong>
               </div>
-              <br>
-              <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">CP</label>
-              <div class="d-flex align-items-center">
-                <select style="width: 10%; height: 37px; background-color:#268196; color:white; border-color: #268196; " id="cp" class="form-control" onchange="">
-                    <option value="">---CP---</option>
-                </select>
-                <a style="background-color: #457766; font-size: 13.5; font-family: nunito; width: 10%; margin-left: 3%; color: white;" class="btn" href="{{ route('colonias.index') }}" title="Todos">Limpiar</a>            
+              <div style="background-color: #F4F6F9; height: 210px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);" class="card-body">
+                <div class="row">
+                  <div class="col-lg-12">
+                      <!-- Elementos de filtrado-->
+                      <label style="font-family: Nunito; font-size: 13.5px; color:black; margin-right: 21.2%;" for="estado">Estado</label>
+                      <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Municipio</label>
+                      <div class="d-flex align-items-center">
+                          <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">
+                            <option value="">----Selecciona Estado----</option>
+                            @foreach($estados as $estado)
+                                <option value="{{ $estado->id }}">{{ $estado->nombre}}</option>
+                            @endforeach
+                          </select>
+                          <select style="width: 50%; background-color: #DAA520; color:white; border-color: #DAA520; " id="municipio" class="form-control" onchange="filtro_municipio(this); filtro_cp(this)">
+                              <option value="">----Selecciona Municipio----</option>
+                          </select>
+                        </div>
+                        <br>
+                        <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">CP</label>
+                        <div class="d-flex align-items-center">
+                          <select style="width: 10%; height: 37px; background-color:#268196; color:white; border-color: #268196; " id="cp" class="form-control" onchange="filtro_cps(this)">
+                              <option value="">---CP---</option>
+                          </select>
+                          <a style="background-color: #457766; font-size: 13.5; font-family: nunito; width: 10%; margin-left: 3%; color: white;" class="btn" href="{{ route('colonias.index') }}" title="Todos">Limpiar</a>            
+                        </div>
+                        <br><br>
+
+                      <script>
+                      // Imprimir el JSON de colonias en la consola
+                      console.log(@json($colonias));
+                      </script>
+                  </div>
+                </div>
               </div>
-              <br><br>
-
-            <script>
-            // Imprimir el JSON de colonias en la consola
-            console.log(@json($colonias));
-            </script>
-
+            </div>  
             <!-- Creamos la tabla para mostrar los colonias -->
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A"> <!--Aplicamos un color de fondo de encabezado personalizado-->
@@ -172,18 +182,18 @@
 
 <!--Script para manipular la actualizacion del desplegable cp-->
 <script>
-  function filtro_cp(cps) {
+  function filtro_cp(mun) {
     //Obtenemos el id seleccionado desde el desplegable
-    let cp = cps.value;
+    let mun_id = mun.value;
     //Llamos al metodo obtener_mun del controlador para consultar los municipios del estaado
-    fetch('/colonias/obtener_cp/' + id)
+    fetch('/colonias/obtener_cp/' + mun_id)
       //Recuperamos la variable $cps de la consulta a la base de datos
       .then(function(response) {
         return response.json();
       })
       //Obtenemos el json de datos de la consulta
       .then(function(jsonData) {
-       //console.log(jsonData); 
+       console.log(jsonData); 
        consultarCP(jsonData);
       })
       //Recuperamos el tipo de error y lo mostramos en la consola del navegador
@@ -194,7 +204,7 @@
       //Funcion para rellenar el desplegable de cp
       function consultarCP(jsonData){
         //Obtenemos el desplegable de cp en base a su id
-        let cp = document.getElementById('cp') 
+        let cp_s = document.getElementById('cp') 
         //Llamamos a la funcion de limpieza del desplegable para evitar acummular cp de estados diferentes
         limpiar_cp(cp);
         //Recorremos el json de datos
@@ -204,9 +214,9 @@
           //Rellenamos con el id del municipio
           op_cp.value = cp.id;
           //Rellenamos con el nombre del municipio
-          op_cp.innerHTML = cp.codigo;
+          op_cp.innerHTML = cp.c;
           //Agregamos la opcion al desplegable
-          cp.append(op_cp);
+          cp_s.append(op_cp);
         });
       }
 
@@ -335,6 +345,66 @@
     });
 }
 </script>
+
+<!--Script para filtrar los registros de la tabla en base a un codigo postal seleccionado en el desplegable-->
+<script>
+  function filtro_cps() {
+    // Obtener el ID del estado seleccionado
+    var cp_id = $('#cp').val();
+    console.log(cp_id);
+
+    $.ajax({
+        url: '/colonias/filtro_cp/' + cp_id, // Actualizado para incluir el estado_id en la URL
+        method: 'POST',
+        data: { id: cp_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
+        success: function(response) {
+            // Limpiar la tabla
+            $('#miTabla tbody').empty();
+            $i = 0;
+            // Iterar sobre los datos recibidos y agregarlos a la tabla
+            $.each(response, function(index, colonia) {
+              console.log(response);
+                var row = '<tr>' +
+                    '<td>' + colonia.no + '</td>' +
+                    '<td>' + colonia.n + '</td>' +
+                    '<td>' + colonia.n_e + '</td>' +
+                    '<td>' + colonia.n_m + '</td>' +
+                    '<td>' + colonia.c + '</td>' +
+                    '<td>' +
+                    '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank">' +
+                    '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
+                    '</a>' +
+                    '</td>'  +
+                    '@can("crear-colonia")' +
+                    '<td style="padding: 10px">' +
+                    '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
+                    '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
+                    '@csrf' +
+                    '@method("DELETE")' +
+                    '<input type="submit" class="btn btn-danger" onclick="return confirmarEliminar(' + colonia.id + ')" value="Borrar">' +
+                    '</form>' +
+                    '</td>' +
+                    '@endcan' +
+                    '</tr>';
+                $('#miTabla tbody').append(row);
+                $i++;
+                console.log($i);
+            });
+
+            // Actualizar la configuración de la paginación
+            var newTotalRecords = $i; // Número total de registros después del filtro
+            $('#miTabla').DataTable().settings()[0]._iRecordsTotal = newTotalRecords;
+            $('#miTabla').DataTable().settings()[0]._iRecordsDisplay = newTotalRecords;
+            $('#miTabla').DataTable().draw(); // Redibujar la tabla con la nueva configuración de paginación
+        },
+
+        error: function(xhr, status, error) {
+            console.error('Error al obtener datos:', error);
+        }
+    });
+}
+</script>
+
 
 <script>
   // Inicializamos el DataTable en la tabla

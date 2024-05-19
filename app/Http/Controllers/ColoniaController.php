@@ -101,6 +101,21 @@ class ColoniaController extends Controller
         return response()->json($colonias);
     }
 
+    //Funcion para filtrar las colonias  pertencientes a un estado y municpio especifico -> recibe como entrada el id del estado y del municipio
+    public function filtro_cp($id)
+    { 
+       $colonias = Colonia::query()
+            ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
+            ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
+            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n',
+                     'colonias.no_col as no','codigo_postals.codigo as c', 'colonias.ubicacion as u') 
+            ->where('codigo_postals.id', '=', $id)
+            ->get();
+        return response()->json($colonias);
+    }
+
     //Obtiene los datos correspondientes a un codigo postal (estado, municipio y colonias)
     public function buscar_datos(Request $request) {
         $cp = $request->codigo_postal;

@@ -10,24 +10,35 @@
       <div class="col-lg-12">
         <div class="card">
           <div class="card-body">
-             <!-- Elementos de filtrado-->
-            <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Estado</label>
-            <div class="d-flex align-items-center">
-            <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  " id="estado" class="form-control" onchange="filtro_estado(this)">
-              <option value="">----Selecciona estado----</option>
-                @foreach($estados as $estado)
-                    <option value="{{ $estado->id }}">{{ $estado->nombre}}
-              </option>
-              @endforeach
-            </select>
-            <a style="background-color: #457766; font-size: 13.5; font-family: nunito; color: white; margin-left: 31.3%; width: 15.8%" class="btn" href="{{ route('municipios.index') }}" title="Todos">Limpiar</a>
-            </div>
-            <div><br></div>
-            <script>
-            // Imprimir el JSON de municipios en la consola
-            console.log(@json($municipios));
-            </script>
-            <!-- Creamos la tabla para mostrar los municipios -->
+            <div  class="card">
+              <div  class="card-header" style="background-color: black; margin-bottom: -20px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);">
+              <strong><p style="font-size: 16px; font-family: nunito; color: White; margin-top: -10px;" class="card-title">Filtros de Busqueda</p></strong>
+              </div>
+              <div style="background-color: #F4F6F9; height: 120px; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);" class="card-body">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <!-- Elementos de filtrado-->
+                    <b><label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Estado</label></b>
+                    <div class="d-flex align-items-center">
+                    <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  " id="estado" class="form-control" onchange="filtro_estado(this)">
+                      <option value="">----Selecciona estado----</option>
+                        @foreach($estados as $estado)
+                            <option value="{{ $estado->id }}">{{ $estado->nombre}}
+                      </option>
+                      @endforeach
+                    </select>
+                    <a style="background-color: #457766; font-size: 13.5; font-family: nunito; color: white; margin-left: 31.3%; width: 15.8%" class="btn" href="{{ route('municipios.index') }}" title="Todos">Limpiar</a>
+                    </div>
+                    <div><br></div>
+                    <script>
+                    // Imprimir el JSON de municipios en la consola
+                    console.log(@json($municipios));
+                    </script>
+                  </div>
+                </div>
+              </div>
+            </div>  
+                     <!-- Creamos la tabla para mostrar los municipios -->
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
                  <tr>
