@@ -33,7 +33,8 @@
                  <tr>
                   <th style="color: white; width: 20%">No. Municipio</th>
                   <th style="color: white; width: 50%">Nombre</th>
-                  <th style="color: white; width: 30%;">Estado</th>
+                  <th style="color: white; width: 20%;">Estado</th>
+                  <th style="color: white; width: 10%;">Ubicacion</th>
                 </tr>
               </thead>
               <tbody id="tablaBody">
@@ -43,6 +44,12 @@
                   <td>{{ $municipio->no }}</td>
                   <td>{{ $municipio->n_m }}</td>
                   <td>{{ $municipio->n_e }}</td>
+                  <!--Agregamos el enlace para la ubicacion de los munnicipios en el Mapa--->
+                  <td>
+                    <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $municipio->u }}" title="Ubicación"  target="_blank">
+                    <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
+                    </a>
+                  </td>
                 </tr>
                 @endforeach
               </tbody>
@@ -84,6 +91,11 @@
                     '<td>' + municipio.no + '</td>' +
                     '<td>' + municipio.n_m + '</td>' +
                     '<td>' + municipio.n_e + '</td>' +
+                    '<td>' +
+                    '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank">' +
+                    '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
+                    '</a>' +
+                    '</td>' +
                     '</tr>';
                 $('#miTabla tbody').append(row); //Agregamos el registro a las filas de la tabla
                 $i++;

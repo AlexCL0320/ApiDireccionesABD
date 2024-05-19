@@ -20,7 +20,7 @@ class CreateColoniasTable extends Migration
             ->onDelete('set null');
             $table->string('no_col', 6);
             $table->string('nombre', 300);
-            $table->string('ubicacion');
+            $table->string('ubicacion')->nullable();
             $table->timestamps();
         });
     }

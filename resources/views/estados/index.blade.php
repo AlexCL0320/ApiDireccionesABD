@@ -16,9 +16,9 @@
             <table class="table table-striped mt-2 table_id" id="miTabla">
               <thead style="background-color:#326F8A">
                 <tr>
-                  <th style="color: white;">No.</th>
-                  <th style="color: white;">Nombre</th>
-                 <!-- <th style="color: white;">Acciones</th>-->
+                  <th style="color: white; width: 20%">No.</th>
+                  <th style="color: white; width: 50">Nombre</th>
+                  <th style="color: white; width: 30%">Ubicacion</th>
                 </tr>
               </thead>
               <tbody>
@@ -27,24 +27,12 @@
                 <tr>
                   <td>{{ $estado->id }}</td>
                   <td>{{ $estado->nombre}}</td>
-                  <!--<td style="padding: 10px">     
-                   <a style="background-color: #326565; color: white; margin-bottom: 0%;" class="btn" href="{{ route('estados.edit', $estado->id) }}" title="Editar estado">Editar</a> 
-                        
-                    {!! Form::open(['method' => 'DELETE', 'route' => ['estados.destroy', $estado->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $estado->id]) !!}
-                      {!! Form::submit('Eliminar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $estado->id . ')']) !!}
-                    {!! Form::close() !!}
-
-                    <script>
-                        function confirmarEliminar(id) {
-                            if (confirm('¿Estás seguro de eliminar este registro?')) {
-                                document.getElementById('deleteForm-' + id).submit();
-                                return true;
-                            } else {
-                                return false;
-                            }
-                        }
-                    </script>
-                  </td>-->
+                  <!--Agregamos el enlace para la ubicacion de los estados en el Mapa--->
+                  <td>
+                    <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $estado->ubicacion }}" title="Ubicación"  target="_blank">
+                    <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
+                    </a>
+                  </td>
                 </tr>
                 @endforeach
               </tbody>

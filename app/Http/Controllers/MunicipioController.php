@@ -18,7 +18,8 @@ class MunicipioController extends Controller
         // Obtener todos los municipios y pasarlos a la vista
         $municipios = Municipio::query()
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-            ->select('estados.nombre as n_e','municipios.nombre as n_m', 'municipios.no_mun as no')
+            ->select('estados.nombre as n_e','municipios.nombre as n_m', 'municipios.no_mun as no',
+                    'municipios.ubicacion as u')
             ->get();
             $estados = Estado::all();
         return view('municipios.index', compact('municipios','estados'));

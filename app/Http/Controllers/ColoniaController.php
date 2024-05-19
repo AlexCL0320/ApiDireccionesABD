@@ -25,7 +25,8 @@ class ColoniaController extends Controller
         ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
         ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
         ->select('estados.nombre as n_e', 'municipios.nombre as n_m',
-                 'colonias.nombre as n', 'colonias.id','codigo_postals.codigo as c')
+                 'colonias.nombre as n', 'colonias.id','codigo_postals.codigo as c', 
+                 'colonias.ubicacion as u')
         ->get();
         return view('colonias.index', compact('colonias', 'estados'));
 
@@ -64,7 +65,8 @@ class ColoniaController extends Controller
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
             ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
             ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
-            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.no_col as no','codigo_postals.codigo as c') // Agrega colonias.estado_id a la selección
+            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 
+                    'colonias.no_col as no','codigo_postals.codigo as c', 'colonias.ubicacion as u') 
             ->where('estados.id','=',$id)
             ->get();
         return response()->json($colonias);
@@ -78,7 +80,8 @@ class ColoniaController extends Controller
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
             ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
             ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
-            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.no_col as no','codigo_postals.codigo as c') // Agrega colonias.estado_id a la selección
+            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n',
+                     'colonias.no_col as no','codigo_postals.codigo as c', 'colonias.ubicacion as u') 
             ->where('estados.id', '=', $id_e)
             ->where('municipios.id', '=', $id)
             ->get();

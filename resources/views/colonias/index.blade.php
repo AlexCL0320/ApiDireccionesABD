@@ -79,7 +79,7 @@
                   <td>{{ $colonia->c }}</td>
                   <!--Agregamos el enlace para la ubicacion de las colonias en el Mapa--->
                   <td>
-                    <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="{{ route('colonias.index', $colonia->id) }}" title="Ubicacion">
+                    <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $colonia->u }}" title="Ubicación"  target="_blank">
                     <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
                     </a>
                   </td>
@@ -193,7 +193,22 @@
                     '<td>' + colonia.n + '</td>' +
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
-                    '<td>' + colonia.c + '</td>' +
+                    '<td>' + colonia.c + '</td>'  +
+                    '<td>' +
+                    '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank">' +
+                    '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
+                    '</a>' +
+                    '</td>' +
+                    '@can("crear-colonia")' +
+                    '<td style="padding: 10px">' +
+                    '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
+                    '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
+                    '@csrf' +
+                    '@method("DELETE")' +
+                    '<input type="submit" class="btn btn-danger" onclick="return confirmarEliminar(' + colonia.id + ')" value="Borrar">' +
+                    '</form>' +
+                    '</td>' +
+                    '@endcan' +
                     '</tr>';
                 $('#miTabla tbody').append(row);
                 $i++;
@@ -237,6 +252,21 @@
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
                     '<td>' + colonia.c + '</td>' +
+                    '<td>' +
+                    '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank">' +
+                    '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
+                    '</a>' +
+                    '</td>'  +
+                    '@can("crear-colonia")' +
+                    '<td style="padding: 10px">' +
+                    '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
+                    '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
+                    '@csrf' +
+                    '@method("DELETE")' +
+                    '<input type="submit" class="btn btn-danger" onclick="return confirmarEliminar(' + colonia.id + ')" value="Borrar">' +
+                    '</form>' +
+                    '</td>' +
+                    '@endcan' +
                     '</tr>';
                 $('#miTabla tbody').append(row);
                 $i++;

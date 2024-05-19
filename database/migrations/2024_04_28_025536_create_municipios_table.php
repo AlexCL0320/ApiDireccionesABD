@@ -18,6 +18,7 @@ class CreateMunicipiosTable extends Migration
             $table->foreignId('estado_id')->nullable()->constrained()->onDelete('set null');
             $table->string('no_mun', 6);
             $table->string('nombre', 180);
+            $table->string('ubicacion')->nullable();
             $table->timestamps();
         });
     }
