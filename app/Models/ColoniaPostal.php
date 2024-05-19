@@ -13,13 +13,4 @@ class ColoniaPostal extends Model
         'codigo_postal_id',
     ];
 
-    public function colonia()
-    {
-        return $this->belongsTo(Colonia::class, 'colonia_id');
-    }
-
-    public function codigoPostal()
-    {
-        return $this->belongsTo(CodigoPostal::class, 'codigo_postal_id');
-    }
 }

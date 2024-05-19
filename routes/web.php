@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 //agregamos los siguientes controladores
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RolController;
-use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\MunicipioController;
 use App\Http\Controllers\ColoniaController;
@@ -21,6 +21,7 @@ use App\Http\Controllers\DireccionController;
 */
 
 Route::get('/', function () {
+    //return view('auth.login');
     return view('welcome');
 });
 
@@ -34,7 +35,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //y creamos un grupo de rutas protegidas para los controladores
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RolController::class);
-    Route::resource('usuarios', UsuarioController::class);
+    Route::resource('usuarios', UserController::class);
     Route::resource('estados', EstadoController::class);
     Route::resource('municipios', MunicipioController::class);
     Route::resource('colonias', ColoniaController::class);

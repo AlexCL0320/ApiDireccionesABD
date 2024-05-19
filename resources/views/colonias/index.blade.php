@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<!--Estilo de prueba para cambiar el color de fondo de un select al tratrar de elegir una opcion-->
 <style>
     select#cp option:hover {
         background-color: black;
@@ -19,39 +20,41 @@
           <div class="card-body">
             <!-- Agregamos un enlace para crear un nuevo colonia si el usuario tiene el permiso -->
             @can('crear-colonia')
-              <a class="btn btn-warning" href="{{ route('colonias.create') }}" title="Crear nuevo colonia">Agregar colonia</a>
+              <a class="btn btn-warning" href="{{ route('colonias.create') }}" title="Crear nuevo colonia">Agregar colonia</a>            
+              <br><br>
             @endcan
-            <br><br>
-             <!-- Elementos de filtrado-->
-           <label style="font-family: Nunito; font-size: 13.5px; color:black; margin-right: 21.2%;" for="estado">Estado</label>
-           <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Municipio</label>
-           <div class="d-flex align-items-center">
-              <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">
-                <option value="">----Selecciona Estado----</option>
-                @foreach($estados as $estado)
-                    <option value="{{ $estado->id }}">{{ $estado->nombre_estado}}</option>
-                @endforeach
-              </select>
-              <select style="width: 50%; background-color: #DAA520; color:white; border-color: #DAA520; " id="municipio" class="form-control" onchange="filtro_municipio(this)">
-                  <option value="">----Selecciona Municipio----</option>
-              </select>
-            </div>
-            <br>
-            <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">CP</label>
+            <!-- Elementos de filtrado-->
+            <label style="font-family: Nunito; font-size: 13.5px; color:black; margin-right: 21.2%;" for="estado">Estado</label>
+            <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Municipio</label>
             <div class="d-flex align-items-center">
-              <select style="width: 10%; height: 37px; background-color:#268196; color:white; border-color: #268196; " id="cp" class="form-control" onchange="">
-                  <option value="">---CP---</option>
-              </select>
-              <a style="background-color: #457766; font-size: 13.5; font-family: nunito; width: 10%; margin-left: 3%; color: white;" class="btn" href="{{ route('colonias.index') }}" title="Todos">Limpiar</a>            
-            </div>
-            <br><br>
+                <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">
+                  <option value="">----Selecciona Estado----</option>
+                  @foreach($estados as $estado)
+                      <option value="{{ $estado->id }}">{{ $estado->nombre}}</option>
+                  @endforeach
+                </select>
+                <select style="width: 50%; background-color: #DAA520; color:white; border-color: #DAA520; " id="municipio" class="form-control" onchange="filtro_municipio(this)">
+                    <option value="">----Selecciona Municipio----</option>
+                </select>
+              </div>
+              <br>
+              <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">CP</label>
+              <div class="d-flex align-items-center">
+                <select style="width: 10%; height: 37px; background-color:#268196; color:white; border-color: #268196; " id="cp" class="form-control" onchange="">
+                    <option value="">---CP---</option>
+                </select>
+                <a style="background-color: #457766; font-size: 13.5; font-family: nunito; width: 10%; margin-left: 3%; color: white;" class="btn" href="{{ route('colonias.index') }}" title="Todos">Limpiar</a>            
+              </div>
+              <br><br>
+
             <script>
             // Imprimir el JSON de colonias en la consola
             console.log(@json($colonias));
             </script>
+
             <!-- Creamos la tabla para mostrar los colonias -->
             <table class="table table-striped mt-2 table_id" id="miTabla">
-              <thead style="background-color:#326F8A">
+              <thead style="background-color:#326F8A"> <!--Aplicamos un color de fondo de encabezado personalizado-->
                  <tr>                
                   <th style="color: white; width: 2%">No.</th>
                   <th style="color: white; width: 30%">Nombre</th>
@@ -59,11 +62,14 @@
                   <th style="color: white; width: 20%">Municipio</th>
                   <th style="color: white; width: 15%">CP</th>
                   <th style="color: white; width: 3%">Ubicacion</th>
-                  <!--<th style="color: white;">Acciones</th>-->
+                  <!--Opciones de edicion para el rol Capturista-->
+                  @can('crear-colonia')
+                    <th style="color: white; width: 10%">Acciones</th>
+                  @endcan
                 </tr>
               </thead>
               <tbody>
-                <!-- Iteramos sobre los colonias y los mostramos en la tabla -->
+                <!-- Iteramos sobre las colonias y los mostramos en la tabla -->
                 @foreach ($colonias as $colonia)
                 <tr class="estado_{{ $colonia->estado_id }}">
                   <td>{{ $colonia->id }}</td>
@@ -71,17 +77,20 @@
                   <td>{{ $colonia->n_e }}</td>
                   <td>{{ $colonia->n_m }}</td>
                   <td>{{ $colonia->c }}</td>
+                  <!--Agregamos el enlace para la ubicacion de las colonias en el Mapa--->
                   <td>
                     <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="{{ route('colonias.index', $colonia->id) }}" title="Ubicacion">
                     <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
                     </a>
                   </td>
-                  <!--<td style="padding: 10px">     
-                   <a style="background-color: #326565; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
-                   {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $colonia->id]) !!}
-                      {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $colonia->id . ')']) !!}
+                  @can('crear-colonia')
+                  <!--Opciones de edicion para el rol Capturista-->
+                  <td style="padding: 10px">     
+                    <a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="{{ route('colonias.edit', $colonia->id) }}" title="Editar colonia">Editar</a>
+                    {!! Form::open(['method' => 'DELETE', 'route' => ['colonias.destroy', $colonia->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $colonia->id]) !!}
+                    {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $colonia->id . ')']) !!}
                     {!! Form::close() !!}
-
+                    <!--Script para un mensaje de confirmacion sobre un registro-->
                     <script>
                         function confirmarEliminar(id) {
                             if (confirm('¿Estás seguro de eliminar este registro?')) {
@@ -92,7 +101,8 @@
                             }
                         }
                     </script>
-                  </td>-->
+                  </td>
+                  @endcan
                 </tr>
                 @endforeach
               </tbody>
@@ -110,22 +120,6 @@
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <!-- BOOTSTRAP -->
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-
-<script>
-  // Inicializamos el DataTable en la tabla
-  $('#miTabla').DataTable({
-    lengthMenu: [
-      [100, 200, 400],
-      [100, 200, 400]
-    ],
-    language: {
-      url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
-    },
-    // Desactivar la ordenación inicial
-    "order": []
-
-  });
-</script>
 
 <!-- Script para manipular la actualizacion de los desplegables-->
 <script>
@@ -260,6 +254,23 @@
     });
 }
 </script>
+
+<script>
+  // Inicializamos el DataTable en la tabla
+  $('#miTabla').DataTable({
+    lengthMenu: [
+      [100, 200, 400],
+      [100, 200, 400]
+    ],
+    language: {
+      url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+    },
+    // Desactivar la ordenación inicial
+    "order": []
+
+  });
+</script>
+
 
 
 @endsection

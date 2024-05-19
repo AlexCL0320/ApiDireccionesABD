@@ -62,11 +62,11 @@
         </div>
 
         <!-- Main Content -->
-        <div class="main-content">
+        <div style="margin-bottom: 0.05%"class="main-content">
             @yield('content')
         </div>
 
-        <footer style="background-color:black; height:9%" class="main-footer footer-bottom">
+        <footer style="background-color:black; height:9%;" class="main-footer footer-bottom">
             @include('layouts.footer')
         </footer>
 

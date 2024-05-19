@@ -11,7 +11,7 @@ use App\Models\Estado;
 class ColoniaController extends Controller
 {
     /**
-     * Muestra una lista de todos los estados.
+     * Muestra una lista de todas las colonias.
      *
      * @return \Illuminate\Http\Response
      */
@@ -22,41 +22,60 @@ class ColoniaController extends Controller
         $colonias = Colonia::query()
         ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
         ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+        ->select('estados.nombre as n_e', 'municipios.nombre as n_m',
+                 'colonias.nombre as n', 'colonias.id')
+        ->whereColumn('municipios.estado_id', '=', 'estados.id')
+        ->whereColumn('colonias.estado_id', '=', 'estados.id')
+        ->get();
+        return view('colonias.index', compact('colonias', 'estados'));
+
+        /**Version 2 de consulta
+         // Obtener todos los estados y pasarlos a la vista
+        $estados = Estado::all();
+        $colonias = Colonia::query()
+        ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+        ->join('estados', 'municipios.estado_id', '=', 'estados.id')
         ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
         ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
-        ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m',
+        ->select('estados.nombre as n_e', 'municipios.nombre as n_m',
                  'colonias.nombre as n', 'colonias.id',
                  'codigo_postals.codigo as c')
         ->whereColumn('municipios.estado_id', '=', 'estados.id')
         ->whereColumn('colonias.estado_id', '=', 'estados.id')
         ->get();
         return view('colonias.index', compact('colonias', 'estados'));
+         */
     }
 
+    //Obtiene los municipios pertenecientes a un estado
     public function obtener_mun($id)
     {
         $municipios = Municipio::where('estado_id','=', $id)
             ->get();        
         return $municipios;
     }
+    
+
+    //Funcion para filtrar las colonias pertenecientes a un estado especifico
     public function filtro_estado($id)
     {
         $colonias = Colonia::query()
             ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-            ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id', 'colonias.estado_id') // Agrega colonias.estado_id a la selección
+            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id', 'colonias.estado_id') // Agrega colonias.estado_id a la selección
             ->where('municipios.estado_id', '=', $id)
             ->where('colonias.estado_id', '=', $id)
             ->get();
         return response()->json($colonias);
     }
     
+    //Funcion para filtrar las colonias  pertencientes a un estado y municpio especifico -> recibe como entrada el id del estado y del municipio
     public function filtro_municipio($id, $id_e)
     { 
        $colonias = Colonia::query()
             ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-            ->select('estados.nombre_estado as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id', 'colonias.estado_id') // Agrega colonias.estado_id a la selección
+            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n', 'colonias.id', 'colonias.estado_id') // Agrega colonias.estado_id a la selección
             ->where('municipios.estado_id', '=', $id_e)
             ->where('colonias.estado_id', '=', $id_e)
             ->where('municipios.id', '=', $id)
@@ -65,6 +84,7 @@ class ColoniaController extends Controller
         return response()->json($colonias);
     }
 
+    //Obtiene los datos correspondientes a un codigo postal (estado, municipio y colonias)
     public function buscar_datos(Request $request) {
         $cp = $request->codigo_postal;
         $codigoPostal = CodigoPostal::where('codigo', $cp)->first();
@@ -83,7 +103,7 @@ class ColoniaController extends Controller
             ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
             ->select(
-                'estados.nombre_estado as n_e', 'estados.id as i_e', 
+                'estados.nombre as n_e', 'estados.id as i_e', 
                 'municipios.nombre as n_m', 'municipios.id as i_m',
                 'colonias.nombre as n_c', 'colonias.id as i_c')
             ->whereColumn('municipios.estado_id', '=', 'estados.id')
@@ -94,20 +114,17 @@ class ColoniaController extends Controller
     }
     
     /**
-     * Muestra el formulario para crear un nuevo estado.
+     * Muestra el formulario para crear una nueva colonia
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        $estados = Estado::all();
-        // Mostrar el formulario de creación de estado
-        $municipios = Municipio::pluck('nombre', 'nombre');
         return view('colonias.crear', compact('municipios', 'estados'));
     }
 
     /**
-     * Almacena un nuevo estado en la base de datos.
+     * Almacena una nueva colonia en la base de datos.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -131,31 +148,16 @@ class ColoniaController extends Controller
         return redirect()->route('colonias.index');
     }
 
-    /**
-     * Muestra un estado específico.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // Obtener el estado por su ID y pasarlo a la vista
-        $estado = Estado::findOrFail($id);
-        return view('estados.show', compact('estado'));
-    }
 
     /**
-     * Muestra el formulario para editar un estado específico.
+     * Muestra el formulario para editar una colonia específica y pasa el ID de la colonia.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit(Colonia $colonia)
     {
-        // Obtener el estado por su ID y pasarlo al formulario de edición
-        $municipios = Municipio::pluck('nombre', 'nombre');
-        
-        return view('colonias.editar', compact('colonia','municipios'));
+        return view('colonias.editar', compact('colonia'));
     }
 
     /**
@@ -179,7 +181,7 @@ class ColoniaController extends Controller
     }
 
     /**
-     * Elimina un estado específico de la base de datos.
+     * Elimina una colonia específica de la base de datos.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -191,7 +193,7 @@ class ColoniaController extends Controller
         $colonia->delete();
 
         // Redireccionar a la lista de estados
-        return redirect()->route('colonias.index')->with('eliminar','ok');
-        //return redirect()->route('colonias.index');
+        //return redirect()->route('colonias.index')->with('eliminar','ok');
+        return redirect()->route('colonias.index');
     }
 }

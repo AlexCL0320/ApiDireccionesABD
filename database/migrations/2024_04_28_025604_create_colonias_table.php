@@ -18,8 +18,9 @@ class CreateColoniasTable extends Migration
             $table->foreignId('municipio_id')->nullable()
             ->constrained()
             ->onDelete('set null');
-            $table->string('numero_colonia', 6);
+            $table->string('no_col', 6);
             $table->string('nombre', 300);
+            $table->string('ubicacion');
             $table->timestamps();
         });
     }

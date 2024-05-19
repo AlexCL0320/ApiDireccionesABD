@@ -52,12 +52,12 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="first_name">Nombre Completo:</label><span
+                            <label for="first_name">Nombre:</label><span
                                     class="text-danger">*</span>
                             <input id="firstName" type="text"
                                    class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
                                    name="name"
-                                   tabindex="1" placeholder="Nombre y apellidos" value="{{ old('name') }}"
+                                   tabindex="1" placeholder="Nombres" value="{{ old('name') }}"
                                    autofocus required>
                             <div class="invalid-feedback">
                                 {{ $errors->first('name') }}
@@ -70,7 +70,7 @@
                                     class="text-danger">*</span>
                             <input id="email" type="email"
                                    class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                   placeholder="Direccion email" name="email" tabindex="1"
+                                   placeholder="Direccion email" name="email" tabindex="4"
                                    value="{{ old('email') }}"
                                    required autofocus>
                             <div class="invalid-feedback">
@@ -85,7 +85,7 @@
                                     class="text-danger">*</span>
                             <input id="password" type="password"
                                    class="form-control{{ $errors->has('password') ? ' is-invalid': '' }}"
-                                   placeholder="Al menos 8 caracteres" name="password" tabindex="2" required>
+                                   placeholder="Al menos 8 caracteres" name="password" tabindex="6" required>
                             <div class="invalid-feedback">
                                 {{ $errors->first('password') }}
                             </div>

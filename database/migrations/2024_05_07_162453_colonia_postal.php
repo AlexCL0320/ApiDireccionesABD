@@ -13,7 +13,7 @@ class Coloniapostal extends Migration
      */
     public function up()
     {
-        Schema::create('coloniapostals', function (Blueprint $table) {
+        Schema::create('colonia_postals', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('colonia_id')->nullable()
@@ -35,6 +35,6 @@ class Coloniapostal extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coloniapostals');
+        Schema::dropIfExists('colonia_postals');
     }
 }

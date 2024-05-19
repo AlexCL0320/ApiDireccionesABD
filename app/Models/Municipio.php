@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Municipio extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'modelo'];
+    protected $fillable = ['nombre', 'no_mun', 'modelo'];
 
     public function colonias(){
         return $this->hasMany(Colonias::class, 'municipio_id');

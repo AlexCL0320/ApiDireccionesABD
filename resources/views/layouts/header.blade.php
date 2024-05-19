@@ -11,7 +11,7 @@
                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <img alt="image" src="{{ asset('img/usuario_@.png') }}" width="100px">
                 <div class="d-sm-none d-lg-inline-block">
-                    ¡Bienvenido! {{Str::words(Auth::user()->name)}}</div>
+                    ¡Bienvenido! {{Str::words(Auth::user()->nombre)}}</div>
             </a>
 
             <div class="dropdown-menu dropdown-menu-right">

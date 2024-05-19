@@ -10,9 +10,8 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                
             
-                        @can('crear-direccion')
+                        @can('registrar-direccion')
                         <a class="btn btn-warning" href="{{ route('direcciones.create') }}">Registrar dreccion</a>
                         <br><br>
                         @endcan
@@ -27,34 +26,41 @@
                                     <th style="color:#fff;">Estado</th>                                   
                                     <th style="color:#fff;">Municipio</th>
                                     <th style="color:#fff;">Colonia</th> 
-                                    <th style="color:#fff;">CP</th>                                                                   
+                                    <th style="color:#fff;">CP</th>                       
+                                    <th style="color: white; width: 10%">Acciones</th>                                                                
                               </thead>
                               <tbody>
                             @foreach ($direcciones as $direccion)
                             <tr>
                                 <td style="display: none;">{{ $direccion->id }}</td>                                
                                 <td>{{ $direccion->titulo }}</td>
-                                <td>{{ $direccion->contenido }}</td>
+                                <td>{{ $direccion->calle }}</td>
+                                <td>{{ $direccion->numero_ex }}</td>
+                                <td>{{ $direccion->numero_int }}</td>
                                 <td>{{ $direccion->titulo }}</td>
                                 <td>{{ $direccion->contenido }}</td>
                                 <td>{{ $direccion->titulo }}</td>
                                 <td>{{ $direccion->contenido }}</td>
-                                <td>{{ $direccion->titulo }}</td>
-                                <td>{{ $direccion->contenido }}</td>
-                                <td>
-                                    <form action="{{ route('direccions.destroy',$direccion->id) }}" method="POST">                                        
-                                        @can('editar-direccion')
-                                        <a class="btn btn-info" href="{{ route('direccions.edit',$direccion->id) }}">Editar</a>
-                                        @endcan
-
-                                        @csrf
-                                        @method('DELETE')
-                                        @can('borrar-direccion')
-                                        <button type="submit" class="btn btn-danger">Borrar</button>
-                                        @endcan
-                                    </form>
                                 </td>
-                            </tr>
+                                <!--Opciones de edicion para el rol Capturista-->
+                                <td style="padding: 10px">     
+                                <a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="{{ route('direcciones.edit', $direccio ->id) }}" title="Editar direccion">Editar</a>
+                                {!! Form::open(['method' => 'DELETE', 'route' => ['direcciones.destroy', $direccion->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $direccion->id]) !!}
+                                {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $direccion->id . ')']) !!}
+                                {!! Form::close() !!}
+                                <!--Script para un mensaje de confirmacion sobre un registro-->
+                                <script>
+                                    function confirmarEliminar(id) {
+                                        if (confirm('¿Estás seguro de eliminar este registro?')) {
+                                            document.getElementById('deleteForm-' + id).submit();
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    }
+                                </script>
+                                </td>                            
+                              </tr>
                             @endforeach
                             </tbody>
                         </table>

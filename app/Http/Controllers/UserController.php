@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -54,7 +54,7 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'nombre' => 'required',
             'apellido_p' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
@@ -62,7 +62,7 @@ class UsuarioController extends Controller
         ]);
     
         $input = $request->all();
-        $input['name'] = strtoupper($input['name']);
+        $input['nombre'] = strtoupper($input['nombre']);
         $input['apellido_p'] = strtoupper($input['apellido_p']);
         $input['apellido_m'] = strtoupper($input['apellido_m']);
         $input['password'] = Hash::make($input['password']);
@@ -94,7 +94,7 @@ class UsuarioController extends Controller
     {
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+        $userRole = $user->roles->pluck('nombre','name')->all();
     
         return view('usuarios.editar',compact('user','roles','userRole'));
     }
@@ -110,7 +110,7 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'nombre' => 'required',
             'apellido_p' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
             'password' => 'same:confirm-password',
@@ -118,7 +118,7 @@ class UsuarioController extends Controller
         ]);
     
         $input = $request->all();
-        $input['name'] = strtoupper($input['name']);
+        $input['nombre'] = strtoupper($input['nombre']);
         $input['apellido_p'] = strtoupper($input['apellido_p']);
         $input['apellido_m'] = strtoupper($input['apellido_m']);
         if(!empty($input['password'])){ 

@@ -26,7 +26,7 @@
                 @foreach ($estados as $estado)
                 <tr>
                   <td>{{ $estado->id }}</td>
-                  <td>{{ $estado->nombre_estado }}</td>
+                  <td>{{ $estado->nombre}}</td>
                   <!--<td style="padding: 10px">     
                    <a style="background-color: #326565; color: white; margin-bottom: 0%;" class="btn" href="{{ route('estados.edit', $estado->id) }}" title="Editar estado">Editar</a> 
                         
