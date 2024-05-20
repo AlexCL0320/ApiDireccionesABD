@@ -60,7 +60,7 @@
                                     </div>                                                                </div>
                                 <div style="margin-top: 2%;" class="col-xs-12 col-sm-12 col-md-12">
                                     <button style="background-color: #326565; color:white" class="btn" id="siguiente" onclick="mostrarSegundoFormulario()">Siguiente</button>
-                                    <a href="/colonias" class="btn btn-danger">Cancelar</a>
+                                    <a href="/colonias" class="btn btn-danger" id="cancelar1">Cancelar</a>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +201,13 @@
             //Bloqueamos el registro del cp y el select de colonias
             $('#cp').prop('disabled', true);
             $('#colonia').prop('disabled', true);
-            
+            //Desactivamos el boton de cancelar para el primer formulario
+            $('#cancelar1').prop('disabled', true);            
+            // Manejar click en el enlace Cancelar para prevenir la redirección
+            $('#cancelar1').on('click', function(event) {
+                event.preventDefault(); // Evitar el comportamiento predeterminado del enlace
+            });
+
             // Rellenamos los datos de la nueva colonia
             $('#estado2').val($('#estado').val());
             $('#municipio2').val($('#municipio').val());

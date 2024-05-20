@@ -60,7 +60,7 @@
                   <td>{{ $estado->nombre}}</td>
                   <!--Agregamos el enlace para la ubicacion de los estados en el Mapa--->
                   <td>
-                    @if($estado->u)
+                    @if($estado->ubicacion)
                     <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $estado->ubicacion }}" title="Ubicación"  target="_blank">
                     <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
                     </a>

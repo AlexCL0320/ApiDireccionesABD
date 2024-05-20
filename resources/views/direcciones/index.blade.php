@@ -17,34 +17,44 @@
                         @endcan
             
                         <table class="table table-striped mt-2 table_id" id="miTabla">
-                               <thead style="background-color:#326F8A">
+                               <thead style="background-color:#326F8A; font-size: 14px">
   
                                     <th style="display: none;">Titular</th>
+                                    <th style="color:#fff;">Titular</th>
                                     <th style="color:#fff;">Calle</th>
-                                    <th style="color:#fff;">Numero Exterior</th>                                    
-                                    <th style="color:#fff;">Numero Interior</th>
+                                    <th style="color:#fff;">No. Ext</th>                                    
+                                    <th style="color:#fff;">No. Int</th>
                                     <th style="color:#fff;">Estado</th>                                   
                                     <th style="color:#fff;">Municipio</th>
                                     <th style="color:#fff;">Colonia</th> 
-                                    <th style="color:#fff;">CP</th>                       
+                                    <th style="color:#fff;">CP</th>         
+                                    <th style="color:#fff;">Ubicacion</th>                       
                                     <th style="color: white; width: 10%">Acciones</th>                                                                
                               </thead>
                               <tbody>
                             @foreach ($direcciones as $direccion)
                             <tr>
                                 <td style="display: none;">{{ $direccion->id }}</td>                                
-                                <td>{{ $direccion->titulo }}</td>
-                                <td>{{ $direccion->calle }}</td>
-                                <td>{{ $direccion->numero_ex }}</td>
-                                <td>{{ $direccion->numero_int }}</td>
-                                <td>{{ $direccion->titulo }}</td>
-                                <td>{{ $direccion->contenido }}</td>
-                                <td>{{ $direccion->titulo }}</td>
-                                <td>{{ $direccion->contenido }}</td>
+                                <td>{{ $direccion->name }}</td>
+                                <td>{{ $direccion->ca }}</td>
+                                <td>{{ $direccion->no_e }}</td>
+                                <td>{{ $direccion->no_i }}</td>
+                                <td>{{ $direccion->n_e }}</td>
+                                <td>{{ $direccion->n_m }}</td>
+                                <td>{{ $direccion->n_c }}</td>
+                                <td>{{ $direccion->c }}</td>
+                                <!--Agregamos el enlace para la ubicacion de los estados en el Mapa--->
+                                <td>
+                                    @if($direccion->u)
+                                    <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $direccion->u }}" title="Ubicación"  target="_blank">
+                                    <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
+                                    </a>
+                                    @endif
                                 </td>
-                                <!--Opciones de edicion para el rol Capturista-->
+
+                                <!--Opciones de edicion para el usario normal-->
                                 <td style="padding: 10px">     
-                                <a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="{{ route('direcciones.edit', $direccio ->id) }}" title="Editar direccion">Editar</a>
+                                <a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="{{ route('direcciones.edit', $direccion ->id) }}" title="Editar direccion">Editar</a>
                                 {!! Form::open(['method' => 'DELETE', 'route' => ['direcciones.destroy', $direccion->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $direccion->id]) !!}
                                 {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $direccion->id . ')']) !!}
                                 {!! Form::close() !!}
@@ -60,6 +70,7 @@
                                     }
                                 </script>
                                 </td>                            
+
                               </tr>
                             @endforeach
                             </tbody>

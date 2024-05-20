@@ -255,7 +255,7 @@ class ColoniaController extends Controller
         $codigoPostal = CodigoPostal::where('codigo', $cp)->first();
         $id_cp = $codigoPostal->id;
 
-        //Obtenemos el ide de la colonia
+        //Obtenemos el id de la colonia
         $col_id = Colonia::latest()->first()->id;
 
         // Crear una nuevo registro en la tabla intermedia
@@ -327,7 +327,7 @@ class ColoniaController extends Controller
         $c_cp = ColoniaPostal::where('colonia_id', $id)->firstOrFail();
         $c_cp -> delete();
 
-        // Obtener el estado por su ID y eliminarlo
+        // Obtener la colonia por su ID y eliminarla
         $colonia = Colonia::findOrFail($id);
         $colonia->delete();
 
