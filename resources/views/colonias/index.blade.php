@@ -233,14 +233,20 @@
         limpiar_cp(cp);
         //Recorremos el json de datos
         jsonData.forEach(function(cp){
-          //Creamos una opcion para el desplegable
-          let op_cp = document.createElement('option');
-          //Rellenamos con el id del municipio
-          op_cp.value = cp.id;
-          //Rellenamos con el nombre del municipio
-          op_cp.innerHTML = cp.c;
-          //Agregamos la opcion al desplegable
-          cp_s.append(op_cp);
+            // Obtener todas las opciones actuales del select
+            let opcionesExistentes = Array.from(cp_s.options).map(option => option.value);
+
+            // Verificar si la opción ya existe
+            if (!opcionesExistentes.includes(cp.id.toString())) {
+                // Crear una opción para el desplegable
+                let op_cp = document.createElement('option');
+                // Rellenar con el id del municipio
+                op_cp.value = cp.id;
+                // Rellenar con el nombre del municipio
+                op_cp.innerHTML = cp.c;
+                // Agregar la opción al desplegable
+                cp_s.append(op_cp);
+            }
         });
       }
 
@@ -389,7 +395,7 @@
             $.each(response, function(index, colonia) {
               console.log(response);
                 // Determinamos si el enlace debe agregarse
-                var link = colonia.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
+                var link = colonia.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
 
                 var row = '<tr>' +
                     '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
