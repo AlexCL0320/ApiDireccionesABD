@@ -25,7 +25,7 @@ class ColoniaController extends Controller
         ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
         ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
         ->select('estados.nombre as n_e', 'municipios.nombre as n_m',
-                 'colonias.nombre as n', 'colonias.id as id','codigo_postals.codigo as c', 
+                 'colonias.nombre as n', 'colonias.id','codigo_postals.codigo as c', 
                  'colonias.ubicacion as u', 'colonias.no_col as no')
         ->get();
         return view('colonias.index', compact('colonias', 'estados'));
@@ -285,7 +285,7 @@ class ColoniaController extends Controller
                  'colonias.nombre as n', 'colonias.id','codigo_postals.codigo as c', 
                  'colonias.ubicacion as u', 'colonias.no_col as no')
         ->where('colonias.id','=', $id)
-        ->get();
+        ->first();
 
         return view('colonias.editar', compact('colonia'));
     }
@@ -297,15 +297,19 @@ class ColoniaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Colonia $colonia)
+    public function update(Request $request, $id)
     {
         $data = $request->validate([
             'nombre' => 'required',
-            'municipio' => 'required',
+            'ubicacion' => 'required',
         ]);
 
-        // Actualizar el cliente
+        /// Buscar la colonia por su ID
+        $colonia = Colonia::findOrFail($id);
+
+        // Actualizar la colonia con los datos validados
         $colonia->update($data);
+        
         // Redireccionar a la lista de estados
         return redirect()->route('colonias.index');
     }

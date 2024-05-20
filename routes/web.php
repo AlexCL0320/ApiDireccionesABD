@@ -51,4 +51,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('/colonias/filtro_cp/{id}', [ColoniaController::class, 'filtro_cp'])->name('colonias.filtro_cp');
     Route::post('/colonias/buscar_datos', [ColoniaController::class, 'buscar_datos'])->name('colonias.buscar_datos');
     Route::post('/colonias/filtro_cp_all/{id}', [ColoniaController::class, 'filtro_cp_all'])->name('colonias.filtro_cp_all');
+    Route::put('/colonias/{id}', 'ColoniasController@update')->name('colonias.update');
 });
