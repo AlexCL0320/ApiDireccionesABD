@@ -35,20 +35,20 @@
                       <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Municipio</label>
                       <div class="d-flex align-items-center">
                           <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">
-                            <option value="">----Selecciona Estado----</option>
+                            <option value="0">----Todos---</option>
                             @foreach($estados as $estado)
                                 <option value="{{ $estado->id }}">{{ $estado->nombre}}</option>
                             @endforeach
                           </select>
                           <select style="width: 50%; background-color: #DAA520; color:white; border-color: #DAA520; " id="municipio" class="form-control" onchange="filtro_municipio(this); filtro_cp(this)">
-                              <option value="">----Selecciona Municipio----</option>
+                              <option value="0">----Todos----</option>
                           </select>
                         </div>
                         <br>
                         <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">CP</label>
                         <div class="d-flex align-items-center">
                           <select style="width: 10%; height: 37px; background-color:#268196; color:white; border-color: #268196; " id="cp" class="form-control" onchange="filtro_cps(this)">
-                              <option value="">---CP---</option>
+                              <option value="0">---Todos---</option>
                           </select>
                           <a style="background-color: #457766; font-size: 13.5; font-family: nunito; width: 10%; margin-left: 3%; color: white;" class="btn" href="{{ route('colonias.index') }}" title="Todos">Limpiar</a>            
                         </div>
@@ -238,8 +238,8 @@
 
     // Realizar una petición AJAX para obtener los datos filtrados
     $.ajax({
-        url: '/colonias/filtro_estado/' + estado_id, // Actualizado para usar la ruta correcta
-        method: 'POST',
+      url: estado_id > 0 ? '/colonias/filtro_estado/' + estado_id : '/colonias/filtro_estado_all',
+      method: 'POST',
         data: { id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         success: function(response) {
             // Limpiar la tabla
@@ -296,7 +296,8 @@
     console.log(municipio_id);
 
     $.ajax({
-        url: '/colonias/filtro_municipio/' + municipio_id + '/' + estado_id, // Actualizado para incluir el estado_id en la URL
+        url: municipio_id > 0 ? '/colonias/filtro_municipio/' + municipio_id + '/' + estado_id : '/colonias/filtro_municipio_all/' + estado_id,
+        //url: '/colonias/filtro_municipio/' + municipio_id + '/' + estado_id, // Actualizado para incluir el estado_id en la URL
         method: 'POST',
         data: { id: municipio_id, estado_id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         success: function(response) {
@@ -351,10 +352,11 @@
   function filtro_cps() {
     // Obtener el ID del estado seleccionado
     var cp_id = $('#cp').val();
+    var mun_id = $('#municipio').val();
     console.log(cp_id);
 
     $.ajax({
-        url: '/colonias/filtro_cp/' + cp_id, // Actualizado para incluir el estado_id en la URL
+        url: cp_id > 0 ? '/colonias/filtro_cp/' + cp_id : '/colonias/filtro_cp_all/' + mun_id ,
         method: 'POST',
         data: { id: cp_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         success: function(response) {

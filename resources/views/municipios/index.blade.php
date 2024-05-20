@@ -21,13 +21,15 @@
                     <b><label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Estado</label></b>
                     <div class="d-flex align-items-center">
                     <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  " id="estado" class="form-control" onchange="filtro_estado(this)">
-                      <option value="">----Selecciona estado----</option>
+                      <option value="0">----Todos----</option>
                         @foreach($estados as $estado)
                             <option value="{{ $estado->id }}">{{ $estado->nombre}}
                       </option>
                       @endforeach
                     </select>
+                    <!--
                     <a style="background-color: #457766; font-size: 13.5; font-family: nunito; color: white; margin-left: 31.3%; width: 15.8%" class="btn" href="{{ route('municipios.index') }}" title="Todos">Limpiar</a>
+                    -->
                     </div>
                     <div><br></div>
                     <script>
@@ -87,8 +89,8 @@
     console.log(estado_id);
     // Realizar una petición AJAX para obtener los datos filtrados
     $.ajax({
-        //Llamos al metodo del controlador y le paso el id del estado seleccionado
-        url: '/municipios/filtro_municipio/' + estado_id, 
+        //Llamos al metodo del controlador y le paso el id del estado seleccionado si es el caso
+        url: estado_id > 0 ? '/municipios/filtro_municipio/' + estado_id : '/municipios/filtro_municipio_all',
         method: 'POST',
         data: { id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         //Rellana la tabla al obtener una respuesta del controlador

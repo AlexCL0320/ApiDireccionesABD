@@ -32,13 +32,25 @@ class MunicipioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-
+    //Funcion para filtrar los municipios pertenecientes a un estado
     public function filtro_municipio($id)
     {
         $municipios = Municipio::query()
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
             ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'municipios.no_mun as no')
             ->where('municipios.estado_id', '=', $id)
+            ->get();
+        
+        return response()->json($municipios);
+    }
+
+
+    //Funcion para filtrar todos los municipios
+    public function filtro_municipio_all()
+    {
+        $municipios = Municipio::query()
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'municipios.no_mun as no')
             ->get();
         
         return response()->json($municipios);
