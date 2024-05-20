@@ -1,6 +1,36 @@
 @extends('layouts.app')
 
 @section('content')
+<!--Estilo para dar formato a la tabla -->
+<style>
+    /* Estilos para la tabla */
+    .table_id {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos para las celdas de la tabla */
+    .table_id th, .table_id td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Estilo para encabezado */
+    .table_id tr:nth-child(odd) {
+        background-color: #326F8A;
+    }
+    /* Estilo para filas pares en el cuerpo de la tabla */
+    .table_id tbody tr:nth-child(even) {
+      background-color: white;
+    }
+
+    /* Estilo para filas impares en el cuerpo de la tabla */
+    .table_id tbody tr:nth-child(odd) {
+      background-color: #EEEEEE;
+      
+    }
+</style>
+
 <section class="section">
   <div class="section-header">
       <h3 style="color:black" class="page__heading">Municipios</h3>
@@ -42,9 +72,9 @@
             </div>  
                      <!-- Creamos la tabla para mostrar los municipios -->
             <table class="table table-striped mt-2 table_id" id="miTabla">
-              <thead style="background-color:#326F8A">
+              <thead>
                  <tr>
-                  <th style="color: white; width: 20%">No. Municipio</th>
+                  <th style="color: white; width: 20%;">No. Municipio</th>
                   <th style="color: white; width: 50%">Nombre</th>
                   <th style="color: white; width: 20%;">Estado</th>
                   <th style="color: white; width: 10%;">Ubicacion</th>
@@ -54,11 +84,11 @@
                 <!-- Iteramos sobre los municipios y los mostramos en la tabla -->
                 @foreach ($municipios as $municipio)
                 <tr>
-                  <td>{{ $municipio->no }}</td>
+                  <td style="padding-left: 25px;">{{ $municipio->no }}</td>
                   <td>{{ $municipio->n_m }}</td>
                   <td>{{ $municipio->n_e }}</td>
                   <!--Agregamos el enlace para la ubicacion de los munnicipios en el Mapa--->
-                  <td>
+                  <td style="text-align: center;">
                     <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $municipio->u }}" title="Ubicación"  target="_blank">
                     <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
                     </a>
@@ -101,10 +131,10 @@
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, municipio) {
                 var row = '<tr>' +
-                    '<td>' + municipio.no + '</td>' +
+                    '<td style="padding-left: 25px;">' + municipio.no + '</td>' +
                     '<td>' + municipio.n_m + '</td>' +
                     '<td>' + municipio.n_e + '</td>' +
-                    '<td>' +
+                    '<td style="text-align: center;">' +
                     '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank">' +
                     '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
                     '</a>' +

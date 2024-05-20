@@ -1,13 +1,35 @@
 @extends('layouts.app')
 
 @section('content')
-<!--Estilo de prueba para cambiar el color de fondo de un select al tratrar de elegir una opcion-->
 <style>
-    select#cp option:hover {
-        background-color: black;
-        color: white;
+    /* Estilos para la tabla */
+    .table_id {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos para las celdas de la tabla */
+    .table_id th, .table_id td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Estilo para encabezado */
+    .table_id tr:nth-child(odd) {
+        background-color: #326F8A;
+    }
+    /* Estilo para filas pares en el cuerpo de la tabla */
+    .table_id tbody tr:nth-child(even) {
+      background-color: white;
+    }
+
+    /* Estilo para filas impares en el cuerpo de la tabla */
+    .table_id tbody tr:nth-child(odd) {
+      background-color: #EEEEEE;
+      
     }
 </style>
+
 
 <section class="section">
   <div class="section-header">
@@ -82,13 +104,13 @@
                 <!-- Iteramos sobre las colonias y los mostramos en la tabla -->
                 @foreach ($colonias as $colonia)
                 <tr class="estado_{{ $colonia->estado_id }}">
-                  <td>{{ $colonia->id }}</td>
+                  <td style="padding-left: 10px;">{{ $colonia->no }}</td>
                   <td>{{ $colonia->n }}</td>
                   <td>{{ $colonia->n_e }}</td>
                   <td>{{ $colonia->n_m }}</td>
                   <td>{{ $colonia->c }}</td>
                   <!--Agregamos el enlace para la ubicacion de las colonias en el Mapa--->
-                  <td>
+                  <td style="text-align: center;">
                     <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $colonia->u }}" title="Ubicación"  target="_blank">
                     <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
                     </a>
@@ -248,18 +270,18 @@
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
                 var row = '<tr>' +
-                    '<td>' + colonia.no + '</td>' +
+                    '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
                     '<td>' + colonia.n + '</td>' +
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
                     '<td>' + colonia.c + '</td>'  +
-                    '<td>' +
+                    '<td  style="text-align: center;">' +
                     '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank">' +
                     '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
                     '</a>' +
                     '</td>' +
                     '@can("crear-colonia")' +
-                    '<td style="padding: 10px">' +
+                    '<td style="padding-left: 10px;">' +
                     '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
                     '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
                     '@csrf' +
@@ -307,18 +329,18 @@
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
                 var row = '<tr>' +
-                    '<td>' + colonia.no + '</td>' +
+                    '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
                     '<td>' + colonia.n + '</td>' +
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
                     '<td>' + colonia.c + '</td>' +
-                    '<td>' +
+                    '<td  style="text-align: center;">' +
                     '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank">' +
                     '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
                     '</a>' +
                     '</td>'  +
                     '@can("crear-colonia")' +
-                    '<td style="padding: 10px">' +
+                    '<td style="padding-left: 10px;">' +
                     '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
                     '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
                     '@csrf' +
@@ -367,18 +389,18 @@
             $.each(response, function(index, colonia) {
               console.log(response);
                 var row = '<tr>' +
-                    '<td>' + colonia.no + '</td>' +
+                    '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
                     '<td>' + colonia.n + '</td>' +
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
                     '<td>' + colonia.c + '</td>' +
-                    '<td>' +
+                    '<td  style="text-align: center;">' +
                     '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank">' +
                     '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
                     '</a>' +
                     '</td>'  +
                     '@can("crear-colonia")' +
-                    '<td style="padding: 10px">' +
+                    '<td style="padding-left: 10px;">' +
                     '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
                     '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
                     '@csrf' +

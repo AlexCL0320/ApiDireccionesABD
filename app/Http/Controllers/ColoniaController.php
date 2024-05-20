@@ -26,7 +26,7 @@ class ColoniaController extends Controller
         ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
         ->select('estados.nombre as n_e', 'municipios.nombre as n_m',
                  'colonias.nombre as n', 'colonias.id','codigo_postals.codigo as c', 
-                 'colonias.ubicacion as u')
+                 'colonias.ubicacion as u', 'colonias.no_col as no')
         ->get();
         return view('colonias.index', compact('colonias', 'estados'));
 
