@@ -37,7 +37,8 @@ class MunicipioController extends Controller
     {
         $municipios = Municipio::query()
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'municipios.no_mun as no')
+            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'municipios.no_mun as no',
+                    'municipios.ubicacion as u')
             ->where('municipios.estado_id', '=', $id)
             ->get();
         
@@ -50,7 +51,8 @@ class MunicipioController extends Controller
     {
         $municipios = Municipio::query()
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'municipios.no_mun as no')
+            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'municipios.no_mun as no',
+                     'municipios.ubicacion as u')
             ->get();
         
         return response()->json($municipios);

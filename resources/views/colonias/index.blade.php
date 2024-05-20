@@ -86,7 +86,7 @@
             </div>  
             <!-- Creamos la tabla para mostrar los colonias -->
             <table class="table table-striped mt-2 table_id" id="miTabla">
-              <thead style="background-color:#326F8A"> <!--Aplicamos un color de fondo de encabezado personalizado-->
+              <thead> <!--Aplicamos un color de fondo de encabezado personalizado-->
                  <tr>                
                   <th style="color: white; width: 2%">No.</th>
                   <th style="color: white; width: 30%">Nombre</th>
@@ -111,9 +111,11 @@
                   <td>{{ $colonia->c }}</td>
                   <!--Agregamos el enlace para la ubicacion de las colonias en el Mapa--->
                   <td style="text-align: center;">
+                    @if($colonia->u)
                     <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $colonia->u }}" title="Ubicación"  target="_blank">
                     <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
                     </a>
+                    @endif
                   </td>
                   @can('crear-colonia')
                   <!--Opciones de edicion para el rol Capturista-->
@@ -269,17 +271,16 @@
             $i = 0;
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
+                // Determinamos si el enlace debe agregarse
+                var link = colonia.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
+
                 var row = '<tr>' +
                     '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
                     '<td>' + colonia.n + '</td>' +
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
                     '<td>' + colonia.c + '</td>'  +
-                    '<td  style="text-align: center;">' +
-                    '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank">' +
-                    '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
-                    '</a>' +
-                    '</td>' +
+                    '<td style="text-align: center;">' + link + '</td>' +
                     '@can("crear-colonia")' +
                     '<td style="padding-left: 10px;">' +
                     '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
@@ -328,17 +329,16 @@
             $i = 0;
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
+                // Determinamos si el enlace debe agregarse
+                var link = colonia.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
+
                 var row = '<tr>' +
                     '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
                     '<td>' + colonia.n + '</td>' +
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
                     '<td>' + colonia.c + '</td>' +
-                    '<td  style="text-align: center;">' +
-                    '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank">' +
-                    '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
-                    '</a>' +
-                    '</td>'  +
+                    '<td style="text-align: center;">' + link + '</td>' +
                     '@can("crear-colonia")' +
                     '<td style="padding-left: 10px;">' +
                     '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
@@ -388,17 +388,16 @@
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
               console.log(response);
+                // Determinamos si el enlace debe agregarse
+                var link = colonia.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
+
                 var row = '<tr>' +
                     '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
                     '<td>' + colonia.n + '</td>' +
                     '<td>' + colonia.n_e + '</td>' +
                     '<td>' + colonia.n_m + '</td>' +
                     '<td>' + colonia.c + '</td>' +
-                    '<td  style="text-align: center;">' +
-                    '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank">' +
-                    '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
-                    '</a>' +
-                    '</td>'  +
+                    '<td style="text-align: center;">' + link + '</td>' +
                     '@can("crear-colonia")' +
                     '<td style="padding-left: 10px;">' +
                     '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +

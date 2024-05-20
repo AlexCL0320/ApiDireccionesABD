@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
 <!--Estilo para dar formato a la tabla -->
 <style>
     /* Estilos para la tabla */
@@ -11,7 +10,7 @@
 
     /* Estilos para las celdas de la tabla */
     .table_id th, .table_id td {
-        padding: 8px;
+        padding: 16px;
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
@@ -32,6 +31,7 @@
     }
 </style>
 
+
 <section class="section">
   <div class="section-header">
       <h3 style="color:black" class="page__heading">Estados</h3>
@@ -45,7 +45,7 @@
            <!-- <a class="btn btn-warning" href="{{ route('estados.create') }}" title="Crear nuevo estado">Agregar estado</a>-->
            <div><br></div>
             <table class="table table-striped mt-2 table_id" id="miTabla">
-              <thead style="background-color:#326F8A">
+              <thead>
                 <tr>
                   <th style="color: white; width: 20%">No. Estado</th>
                   <th style="color: white; width: 50">Nombre</th>
@@ -60,9 +60,11 @@
                   <td>{{ $estado->nombre}}</td>
                   <!--Agregamos el enlace para la ubicacion de los estados en el Mapa--->
                   <td>
+                    @if($estado->u)
                     <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $estado->ubicacion }}" title="Ubicación"  target="_blank">
                     <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
                     </a>
+                    @endif
                   </td>
                 </tr>
                 @endforeach

@@ -1,6 +1,38 @@
 @extends('layouts.app')
 
 @section('content')
+
+<!--Estilo para dar formato a la tabla -->
+<style>
+    /* Estilos para la tabla */
+    .table_id {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos para las celdas de la tabla */
+    .table_id th, .table_id td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    /* Estilo para encabezado */
+    .table_id tr:nth-child(odd) {
+        background-color: #326F8A;
+    }
+    /* Estilo para filas pares en el cuerpo de la tabla */
+    .table_id tbody tr:nth-child(even) {
+      background-color: white;
+    }
+
+    /* Estilo para filas impares en el cuerpo de la tabla */
+    .table_id tbody tr:nth-child(odd) {
+      background-color: #EEEEEE;
+      
+    }
+</style>
+
+
 <section class="section">
   <div class="section-header">
       <h3 style="color:black" class="page__heading">Usuarios</h3>
@@ -27,7 +59,7 @@
 
 
                             <table class="table table-striped mt-2 table_id" id="miTabla">
-                              <thead style="background-color:#326F8A">
+                              <thead>
                                   <th style="display: none;">ID</th>
                                   <th style="color:#fff;">Nombre</th>
                                   <th style="color:#fff;">Apellido Paterno</th>

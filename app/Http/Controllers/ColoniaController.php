@@ -25,7 +25,7 @@ class ColoniaController extends Controller
         ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
         ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
         ->select('estados.nombre as n_e', 'municipios.nombre as n_m',
-                 'colonias.nombre as n', 'colonias.id','codigo_postals.codigo as c', 
+                 'colonias.nombre as n', 'colonias.id as id','codigo_postals.codigo as c', 
                  'colonias.ubicacion as u', 'colonias.no_col as no')
         ->get();
         return view('colonias.index', compact('colonias', 'estados'));
@@ -206,7 +206,7 @@ class ColoniaController extends Controller
      */
     public function create()
     {
-        return view('colonias.crear', compact('municipios', 'estados'));
+        return view('colonias.crear');
     }
 
     /**
@@ -218,19 +218,51 @@ class ColoniaController extends Controller
     public function store(Request $request)
     {
         // Validar los datos del formulario
-
         $data = $request->validate([
-            'nombre' => 'required',
-            'municipio' => 'required',
+            'nombre_col' => 'required',
+            'ubicacion' => 'required'
         ]);
-        
-        // Crear un nuevo estado en la base de datos
-        $municipio = Municipio::firstOrCreate(['nombre' => $data['municipio']]);
+
+        //Obtenemos el estado y municipio
+        $estado = $request->estado_col;
+        $municipio = $request->municipio_col;
+
+        //Obtenemos el id de municipio y estado
+        $mun = Municipio::query()
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->select('estados.id as i_e', 'municipios.id as i_m')
+            ->where('estados.nombre', '=', $estado)
+            ->where('municipios.nombre', '=', $municipio)
+            ->first();
+
+        //Obtenemos el numero de colonia nuevo 
+        $no_col = Colonia::where('municipio_id', $mun->i_m)->count();
+        $no_col++;
+
+        // Crear una nueva colonia en la base de datos
         $colonia = Colonia::create([
-            'nombre' => $data['nombre'],
-            'municipio_id' => $municipio->id,
+            'nombre' => $request['nombre_col'],
+            'municipio_id' => $mun->i_m,
+            'no_col' => $no_col,
+            'ubicacion' =>  $request['ubicacion']
         ]);
-        
+
+
+        //Agregamos la colonia y su cp a la tabla intermedia
+        //Obtenemos el id del codigo postal
+        $cp = $request->codigo_postal_col;
+        $codigoPostal = CodigoPostal::where('codigo', $cp)->first();
+        $id_cp = $codigoPostal->id;
+
+        //Obtenemos el ide de la colonia
+        $col_id = Colonia::latest()->first()->id;
+
+        // Crear una nuevo registro en la tabla intermedia
+        $c_cp = ColoniaPostal::create([
+            'colonia_id' => $col_id,
+            'codigo_postal_id' => $id_cp
+        ]);
+
         return redirect()->route('colonias.index');
     }
 
@@ -241,8 +273,19 @@ class ColoniaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Colonia $colonia)
+    public function edit($id)
     {
+        $colonia = Colonia::query()
+        ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+        ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+        ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
+        ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
+        ->select('estados.nombre as n_e', 'municipios.nombre as n_m',
+                 'colonias.nombre as n', 'colonias.id','codigo_postals.codigo as c', 
+                 'colonias.ubicacion as u', 'colonias.no_col as no')
+        ->where('colonias.id','=', $id)
+        ->get();
+
         return view('colonias.editar', compact('colonia'));
     }
 
@@ -274,12 +317,15 @@ class ColoniaController extends Controller
      */
     public function destroy($id)
     {
+        
+        //Eliminamos su registro en la tabla intermedia entre cp y colonia
+        $c_cp = ColoniaPostal::where('colonia_id', $id)->firstOrFail();
+        $c_cp -> delete();
+
         // Obtener el estado por su ID y eliminarlo
         $colonia = Colonia::findOrFail($id);
         $colonia->delete();
 
-        // Redireccionar a la lista de estados
-        //return redirect()->route('colonias.index')->with('eliminar','ok');
         return redirect()->route('colonias.index');
     }
 }

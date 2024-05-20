@@ -10,7 +10,7 @@
 
     /* Estilos para las celdas de la tabla */
     .table_id th, .table_id td {
-        padding: 8px;
+        padding: 16px;
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
@@ -48,7 +48,7 @@
                 <div class="row">
                   <div class="col-lg-12">
                     <!-- Elementos de filtrado-->
-                    <b><label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Estado</label></b>
+                    <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Estado</label>
                     <div class="d-flex align-items-center">
                     <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  " id="estado" class="form-control" onchange="filtro_estado(this)">
                       <option value="0">----Todos----</option>
@@ -89,9 +89,11 @@
                   <td>{{ $municipio->n_e }}</td>
                   <!--Agregamos el enlace para la ubicacion de los munnicipios en el Mapa--->
                   <td style="text-align: center;">
+                    @if($municipio->u)
                     <a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn"  href="{{ $municipio->u }}" title="Ubicación"  target="_blank">
                     <img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">
                     </a>
+                    @endif
                   </td>
                 </tr>
                 @endforeach
@@ -111,6 +113,21 @@
 <!-- BOOTSTRAP -->
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
+<script>
+  // Inicializamos el DataTable en la tabla y su paginacion
+  $('#miTabla').DataTable({
+    lengthMenu: [
+      [100, 200, 400], //Opciones de paginacion del desplegable
+      [100, 200, 400] //Paginacion de la tabla
+    ],
+    language: {
+      url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+    },
+    // Desactivamos la ordenación inicial del DataTable
+    "order": []
+  });
+</script>
+
 <!--Script para filtrar los elementos de la tabla en base al desplegable #estado-->
 <script>
   function filtro_estado() {
@@ -125,57 +142,32 @@
         data: { id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         //Rellana la tabla al obtener una respuesta del controlador
         success: function(response) {
+            // Destruimos la instancia existente del DataTable antes de limpiar la tabla
+            //$('#miTabla').DataTable().destroy();
             // Limpiar la tabla
             $('#miTabla tbody').empty();
             $i = 0; //Contador de los elementos filtrados
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, municipio) {
+                // Determinamos si el enlace debe agregarse
+                var link = municipio.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
+
                 var row = '<tr>' +
                     '<td style="padding-left: 25px;">' + municipio.no + '</td>' +
                     '<td>' + municipio.n_m + '</td>' +
                     '<td>' + municipio.n_e + '</td>' +
-                    '<td style="text-align: center;">' +
-                    '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank">' +
-                    '<img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;">' +
-                    '</a>' +
-                    '</td>' +
+                    '<td style="text-align: center;">' + link + '</td>' +
                     '</tr>';
-                $('#miTabla tbody').append(row); //Agregamos el registro a las filas de la tabla
+                $('#miTabla tbody').append(row); // Agregamos el registro a las filas de la tabla
                 $i++;
-            }); 
+            });
             console.log($i);//Imprimimos el contador en consola para saber los municipios filtrados
-            // Actualizar la configuración de la paginación - Aun no funciona como deberia
-            var newTotalRecords = $i; // Número total de registros después del filtro
-            $('#miTabla').DataTable().settings()[0]._iRecordsTotal = newTotalRecords;
-            $('#miTabla').DataTable().settings()[0]._iRecordsDisplay = newTotalRecords;
-            $('#miTabla').DataTable().draw(); // Redibujar la tabla con la nueva configuración de paginación
-
-            // Destruimos la instancia existente del DataTable y la reinstalamos para reflejar los nuevos datos
-            $('#miTabla').DataTable().destroy();
-            $('#miTabla').DataTable();
-
         },
         //Si ocurre algun error al obtener los municipios pertenecientes a un estado lo imprimimos por consola
         error: function(xhr, status, error) {
             console.error('Error al obtener datos:', error);
         }
     });
-}
-</script>
-
-
-<script>
-  // Inicializamos el DataTable en la tabla y su paginacion
-  $('#miTabla').DataTable({
-    lengthMenu: [
-      [100, 200, 400], //Opciones de paginacion del desplegable
-      [100, 200, 400] //Paginacion de la tabla
-    ],
-    language: {
-      url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
-    },
-    // Desactivamos la ordenación inicial del DataTable
-    "order": []
-  });
+  }
 </script>
 @endsection

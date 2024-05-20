@@ -9,7 +9,7 @@ use App\Models\ColoniaPostal;
 class Colonia extends Model
 {
     use HasFactory;
-    protected $fillable = ['nombre', 'no_col','municipio_id'];
+    protected $fillable = ['nombre', 'no_col','municipio_id', 'ubicacion'];
     
     //Lave foranea a direccion
     public function direccions(){
