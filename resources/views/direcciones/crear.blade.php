@@ -34,7 +34,7 @@
                                 </div>
                             @endif
 
-                            {!! Form::open(array('route' => 'direcciones.store','method'=>'POST')) !!}
+                            {!! Form::open(array('route' => 'direcciones.store','method'=>'POST', 'onsubmit' => 'return validarSeleccionColonia()')) !!}
                             <!-- Campo oculto para incluir el valor de $user->id -->
                             {!! Form::hidden('user_id', $user->id) !!}
                             <!-- Otros campos del formulario -->
@@ -80,7 +80,8 @@
                                         <select style="width: 50%; margin-right: 5%; margin-top:0%" id="colonia" class="form-control" name="colonia_id" onchange="imprimirValor(this)">    
                                             <option value="0">----Selecciona Colonia----</option>
                                         </select>
-                                    </div>     
+                                    </div> 
+                                    <br>     
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
@@ -153,8 +154,12 @@
                 $('#municipio').val(data.n_m);
             }
 
-            // Limpiar el desplegable de colonia
-            $('#colonia').empty();
+
+            //Funcion para limpiar los elementos previos del select 
+            while($('#colonia').length >1){
+                $('#colonia').remove(1);
+            }
+
             // Verificar si hay datos en la respuesta para rellenar las colonias
             if (response.length > 0) {
                 // Iterar sobre todas las opciones del array
@@ -198,4 +203,16 @@
             console.log('Valor seleccionado:', selectedValue);
            });
         }
+</script>
+
+<!--Validar selección de una colonia-->
+<script>
+    function validarSeleccionColonia() {
+        var coloniaElement = document.getElementById('colonia');
+        if (coloniaElement.value == '0') {
+            alert('Debes seleccionar una colonia');
+            return false; // Evitar el envío del formulario
+        }
+        return true; // Permitir el envío del formulario si la colonia está seleccionada
+    }
 </script>

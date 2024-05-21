@@ -12,8 +12,19 @@
                         <div class="card-body">
             
                         @can('registrar-direccion')
-                        <a class="btn btn-warning" href="{{ route('direcciones.create') }}">Registrar dreccion</a>
-                        <br><br>
+                            <!-- if para validar si el usario puedo o no crear una direccion -->
+                            @if($direcciones->count() >= 1)
+                                <a class="btn btn-warning" onclick="mostrarAlerta()">Registrar dirección</a>
+                                <script>
+                                    function mostrarAlerta() {
+                                        // Muestra un alert indicando que ya hay una dirección registrada
+                                        alert('Ya cuentas con una dirección registrada');
+                                    }
+                                </script>
+                            @else
+                                <a class="btn btn-warning" href="{{ route('direcciones.create') }}">Registrar dirección</a>
+                            @endif
+                            <br><br>
                         @endcan
             
                         <table class="table table-striped mt-2 table_id" id="miTabla">

@@ -159,8 +159,11 @@
                 $('#municipio').val(data.n_m);
             }
 
-            // Limpiar el desplegable de colonia
-            $('#colonia').empty();
+            //Funcion para limpiar los elementos previos del select 
+            while($('#colonia').length >1){
+                $('#colonia').remove(1);
+            }
+            
             // Verificar si hay datos en la respuesta para rellenar las colonias
             if (response.length > 0) {
                 // Iterar sobre todas las opciones del array

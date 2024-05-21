@@ -13,18 +13,34 @@ class DireccionController extends Controller
         $user = Auth::user(); // Obtén el usuario logueado
         // Obtener todos los municipios y pasarlos a la vista
         $id_user = $user->id;
-        $direcciones = User::query()
-            ->join('direccions', 'users.direccion_id', '=', 'direccions.id')
-            ->join('colonias', 'direccions.colonia_id', '=', 'colonias.id')
-            ->join('colonia_postals', 'colonias.id', '=', 'colonia_postals.colonia_id')
-            ->join('codigo_postals', 'colonia_postals.codigo_postal_id', '=', 'codigo_postals.id')
-            ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
-            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-            ->select('users.nombre as name','direccions.calle as c','direccions.numero_ex as no_e', 'direccions.numero_int as no_i', 
-                    'estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n_c', 'colonias.ubicacion as u',
-                    'codigo_postals.codigo as c', 'direccions.calle as ca', 'direccions.id as id')
-            ->where('users.id', '=', $id_user)
-            ->get();
+        // Verificar si el correo electrónico del usuario es "admin@gmail.com" para mostrar todas las direcciones de sistema
+        if ($user->email === 'admin@gmail.com') {
+            $direcciones = User::query()
+                ->join('direccions', 'users.direccion_id', '=', 'direccions.id')
+                ->join('colonias', 'direccions.colonia_id', '=', 'colonias.id')
+                ->join('colonia_postals', 'colonias.id', '=', 'colonia_postals.colonia_id')
+                ->join('codigo_postals', 'colonia_postals.codigo_postal_id', '=', 'codigo_postals.id')
+                ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+                ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+                ->select('users.nombre as name','direccions.calle as c','direccions.numero_ex as no_e', 'direccions.numero_int as no_i', 
+                        'estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n_c', 'colonias.ubicacion as u',
+                        'codigo_postals.codigo as c', 'direccions.calle as ca', 'direccions.id as id')
+                ->get();
+        } 
+        else {
+            $direcciones = User::query()
+                ->join('direccions', 'users.direccion_id', '=', 'direccions.id')
+                ->join('colonias', 'direccions.colonia_id', '=', 'colonias.id')
+                ->join('colonia_postals', 'colonias.id', '=', 'colonia_postals.colonia_id')
+                ->join('codigo_postals', 'colonia_postals.codigo_postal_id', '=', 'codigo_postals.id')
+                ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+                ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+                ->select('users.nombre as name','direccions.calle as c','direccions.numero_ex as no_e', 'direccions.numero_int as no_i', 
+                        'estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n_c', 'colonias.ubicacion as u',
+                        'codigo_postals.codigo as c', 'direccions.calle as ca', 'direccions.id as id')
+                ->where('users.id', '=', $id_user)
+                ->get();
+        }
         return view('direcciones.index', compact('direcciones'));
     }
 
@@ -66,17 +82,32 @@ class DireccionController extends Controller
 
     public function edit($id)
     {
-        return view('direcciones.editar');
+        $user = Auth::user(); // Obtén el usuario logueado
+        $direccion = User::query()
+            ->join('direccions', 'users.direccion_id', '=', 'direccions.id')
+            ->join('colonias', 'direccions.colonia_id', '=', 'colonias.id')
+            ->join('colonia_postals', 'colonias.id', '=', 'colonia_postals.colonia_id')
+            ->join('codigo_postals', 'colonia_postals.codigo_postal_id', '=', 'codigo_postals.id')
+            ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->select('users.nombre as name','direccions.calle as c','direccions.numero_ex as no_e', 'direccions.numero_int as no_i', 
+                    'estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n_c', 'colonias.ubicacion as u',
+                    'codigo_postals.codigo as c', 'direccions.calle as ca', 'direccions.id as id', 'users.apellido_p as a_p',
+                    'users.apellido_m as a_m')
+            ->where('direccions.id', '=', $id)
+            ->first();
+        return view('direcciones.editar',compact('user','direccion'));
     }
 
-    public function update(Request $request, Direccion $direccion)
+    public function update(Request $request,$id)
     {
         request()->validate([
-            'coloni_id' => 'required',
+            'colonia_id' => 'required',
             'calle' => 'required',
-            'num_ext' => 'required',
+            'numero_ex' => 'required',
         ]);
 
+        $direccion = Direccion::findOrFail($id);
         $direccion->update($request->all());
 
         return redirect()->route('direcciones.index');
