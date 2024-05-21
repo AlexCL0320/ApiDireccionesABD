@@ -2,6 +2,11 @@
 @section('title')
     Register
 @endsection
+<style>
+    .uppercase-input {
+    text-transform: uppercase;
+}
+</style>
 
 @section('content')
     <style>
@@ -52,15 +57,43 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
-                            <label for="first_name">Nombre:</label><span
+                            <label for="first_name">Nombre(s):</label><span
                                     class="text-danger">*</span>
                             <input id="firstName" type="text"
-                                   class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                   class="uppercase-input form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
                                    name="name"
-                                   tabindex="1" placeholder="Nombres" value="{{ old('name') }}"
+                                   tabindex="1" placeholder="" value="{{ old('name') }}"
                                    autofocus required>
                             <div class="invalid-feedback">
                                 {{ $errors->first('name') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="last_name">Apellido Paterno:</label><span
+                                    class="text-danger">*</span>
+                            <input id="lastName" type="text"
+                                class=" uppercase-input form-control{{ $errors->has('apellido_p') ? ' is-invalid' : '' }}"
+                                name="apellido_p"
+                                tabindex="2" placeholder="" value="{{ old('apellido_p') }}"
+                                required>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('apellido_p') }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="last_name">Apellido Materno:</label><span
+                                    class="text-danger">*</span>
+                            <input id="lastName" type="text"
+                                class="uppercase-input form-control{{ $errors->has('apellido_m') ? ' is-invalid' : '' }}"
+                                name="apellido_m"
+                                tabindex="3" placeholder="" value="{{ old('apellido_m') }}"
+                                required>
+                            <div class="invalid-feedback">
+                                {{ $errors->first('apellido_m') }}
                             </div>
                         </div>
                     </div>

@@ -84,6 +84,7 @@
                                       @endif
                                     </td>
                                     <td style="padding: 10px">
+                                      @if($usuario->email != 'admin@gmail.com')
                                       <a style="background-color: #326565; color: white; margin-bottom: 0%;" class="btn" href="{{ route('usuarios.edit', $usuario->id) }}" title="Editar usuario">Editar</a>        
                                       {!! Form::open(['method' => 'DELETE', 'route' => ['usuarios.destroy', $usuario->id], 'style' => 'display:inline', 'id' => 'deleteForm-' . $usuario->id]) !!}
                                           {!! Form::submit('Borrar', ['class' => 'btn btn-danger', 'onclick' => 'return confirmarEliminar(' . $usuario->id . ')']) !!}
@@ -99,6 +100,7 @@
                                                 }
                                             }
                                         </script>
+                                        @endif
                                       </td>
                                   </tr>
                                 @endforeach
