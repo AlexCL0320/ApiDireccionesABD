@@ -114,11 +114,11 @@
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
-  // Inicializamos el DataTable en la tabla y su paginacion
-  $('#miTabla').DataTable({
+    // Inicializamos el DataTable en la tabla y su paginacion
+    var table =$('#miTabla').DataTable({
     lengthMenu: [
-      [100, 200, 400], //Opciones de paginacion del desplegable
-      [100, 200, 400] //Paginacion de la tabla
+      [10,100, 200, 400], //Opciones de paginacion del desplegable
+      [10,100, 200, 400] //Paginacion de la tabla
     ],
     language: {
       url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
@@ -142,26 +142,26 @@
         data: { id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         //Rellana la tabla al obtener una respuesta del controlador
         success: function(response) {
+            table.clear();
             // Destruimos la instancia existente del DataTable antes de limpiar la tabla
-            //$('#miTabla').DataTable().destroy();
-            // Limpiar la tabla
-            $('#miTabla tbody').empty();
             $i = 0; //Contador de los elementos filtrados
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, municipio) {
                 // Determinamos si el enlace debe agregarse
                 var link = municipio.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
 
-                var row = '<tr>' +
-                    '<td style="padding-left: 25px;">' + municipio.no + '</td>' +
-                    '<td>' + municipio.n_m + '</td>' +
-                    '<td>' + municipio.n_e + '</td>' +
-                    '<td style="text-align: center;">' + link + '</td>' +
-                    '</tr>';
-                $('#miTabla tbody').append(row); // Agregamos el registro a las filas de la tabla
+                // Agregar el registro a DataTable
+                table.row.add([
+                    municipio.no,
+                    municipio.n_m,
+                    municipio.n_e,
+                    link
+                ]);
                 $i++;
             });
             console.log($i);//Imprimimos el contador en consola para saber los municipios filtrados
+            // Redibujar la tabla una vez después de añadir todas las filas
+            table.draw();
         },
         //Si ocurre algun error al obtener los municipios pertenecientes a un estado lo imprimimos por consola
         error: function(xhr, status, error) {

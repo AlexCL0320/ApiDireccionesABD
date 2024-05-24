@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@can('ver-estados')
 <!--Estilo para dar formato a la tabla -->
 <style>
     /* Estilos para la tabla */
@@ -95,4 +96,5 @@
     }
   });
 </script>
+@endcan
 @endsection

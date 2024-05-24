@@ -155,6 +155,22 @@
 <!-- BOOTSTRAP -->
 <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
+<script>
+  // Inicializamos la paginacion en la tabla
+    // Inicializamos el DataTable en la tabla y su paginacion
+    var table =$('#miTabla').DataTable({
+    lengthMenu: [
+      [100, 200, 400], //Opciones de paginacion del desplegable
+      [100, 200, 400] //Paginacion de la tabla
+    ],
+    language: {
+      url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+    },
+    // Desactivamos la ordenación inicial del DataTable
+    "order": []
+  });
+</script>
+
 <!-- Script para manipular la actualizacion de los desplegables-->
 <script>
   function filtro_estados(estados) {
@@ -270,44 +286,37 @@
     $.ajax({
       url: estado_id > 0 ? '/colonias/filtro_estado/' + estado_id : '/colonias/filtro_estado_all',
       method: 'POST',
-        data: { id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
+      data: { id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         success: function(response) {
             // Limpiar la tabla
-            $('#miTabla tbody').empty();
+            table.clear();
             $i = 0;
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
                 // Determinamos si el enlace debe agregarse
                 var link = colonia.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
 
-                var row = '<tr>' +
-                    '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
-                    '<td>' + colonia.n + '</td>' +
-                    '<td>' + colonia.n_e + '</td>' +
-                    '<td>' + colonia.n_m + '</td>' +
-                    '<td>' + colonia.c + '</td>'  +
-                    '<td style="text-align: center;">' + link + '</td>' +
-                    '@can("crear-colonia")' +
-                    '<td style="padding-left: 10px;">' +
-                    '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
+                var row = [
+                    colonia.no,
+                    colonia.n,
+                    colonia.n_e,
+                    colonia.n_m,
+                    colonia.c,
+                    link
+                ];
+
+                // Verificación de permiso y agregación de elementos si corresponde
+                @if(\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->can('crear-colonia'))
+                    row.push('<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
                     '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
                     '@csrf' +
                     '@method("DELETE")' +
-                    '<input type="submit" class="btn btn-danger" onclick="return confirmarEliminar(' + colonia.id + ')" value="Borrar">' +
-                    '</form>' +
-                    '</td>' +
-                    '@endcan' +
-                    '</tr>';
-                $('#miTabla tbody').append(row);
-                $i++;
-                console.log($i);
-            });
+                    '<input type="submit" class="btn btn-danger" onclick="return confirmarEliminar(' + colonia.id + ')" value="Borrar">');
+                @endif
 
-            // Actualizar la configuración de la paginación
-            var newTotalRecords = $i; // Número total de registros después del filtro
-            $('#miTabla').DataTable().settings()[0]._iRecordsTotal = newTotalRecords;
-            $('#miTabla').DataTable().settings()[0]._iRecordsDisplay = newTotalRecords;
-            $('#miTabla').DataTable().draw(); // Redibujar la tabla con la nueva configuración de paginación
+                table.row.add(row);
+            });
+            table.draw();
         },
 
         error: function(xhr, status, error) {
@@ -331,41 +340,36 @@
         data: { id: municipio_id, estado_id: estado_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         success: function(response) {
             // Limpiar la tabla
-            $('#miTabla tbody').empty();
+            table.clear();
             $i = 0;
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
                 // Determinamos si el enlace debe agregarse
                 var link = colonia.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + municipio.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
 
-                var row = '<tr>' +
-                    '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
-                    '<td>' + colonia.n + '</td>' +
-                    '<td>' + colonia.n_e + '</td>' +
-                    '<td>' + colonia.n_m + '</td>' +
-                    '<td>' + colonia.c + '</td>' +
-                    '<td style="text-align: center;">' + link + '</td>' +
-                    '@can("crear-colonia")' +
-                    '<td style="padding-left: 10px;">' +
-                    '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
+                var row = [
+                    colonia.no,
+                    colonia.n,
+                    colonia.n_e,
+                    colonia.n_m,
+                    colonia.c,
+                    link
+                ];
+
+                // Verificación de permiso y agregación de elementos si corresponde
+                @if(\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->can('crear-colonia'))
+                    row.push('<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
                     '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
                     '@csrf' +
                     '@method("DELETE")' +
-                    '<input type="submit" class="btn btn-danger" onclick="return confirmarEliminar(' + colonia.id + ')" value="Borrar">' +
-                    '</form>' +
-                    '</td>' +
-                    '@endcan' +
-                    '</tr>';
-                $('#miTabla tbody').append(row);
+                    '<input type="submit" class="btn btn-danger" onclick="return confirmarEliminar(' + colonia.id + ')" value="Borrar">');
+                @endif
+
+                table.row.add(row);
                 $i++;
                 console.log($i);
             });
-
-            // Actualizar la configuración de la paginación
-            var newTotalRecords = $i; // Número total de registros después del filtro
-            $('#miTabla').DataTable().settings()[0]._iRecordsTotal = newTotalRecords;
-            $('#miTabla').DataTable().settings()[0]._iRecordsDisplay = newTotalRecords;
-            $('#miTabla').DataTable().draw(); // Redibujar la tabla con la nueva configuración de paginación
+            table.draw();
         },
 
         error: function(xhr, status, error) {
@@ -389,42 +393,35 @@
         data: { id: cp_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         success: function(response) {
             // Limpiar la tabla
-            $('#miTabla tbody').empty();
+            table.clear();
             $i = 0;
             // Iterar sobre los datos recibidos y agregarlos a la tabla
             $.each(response, function(index, colonia) {
-              console.log(response);
+                console.log(response);
                 // Determinamos si el enlace debe agregarse
                 var link = colonia.u ? '<a style="background-color: #326565; color: white; width:42px; height: 42px" class="btn" href="' + colonia.u + '" title="Ubicación" target="_blank"><img src="{{ asset('img/ubicacion.png') }}" alt="Ubicacion Icon" style="width: 30px; height: 30px; margin-left: -7px;"></a>' : '';
+                var row = [
+                    colonia.no,
+                    colonia.n,
+                    colonia.n_e,
+                    colonia.n_m,
+                    colonia.c,
+                    link
+                ];
 
-                var row = '<tr>' +
-                    '<td style="padding-left: 10px;">' + colonia.no + '</td>' +
-                    '<td>' + colonia.n + '</td>' +
-                    '<td>' + colonia.n_e + '</td>' +
-                    '<td>' + colonia.n_m + '</td>' +
-                    '<td>' + colonia.c + '</td>' +
-                    '<td style="text-align: center;">' + link + '</td>' +
-                    '@can("crear-colonia")' +
-                    '<td style="padding-left: 10px;">' +
-                    '<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
+                // Verificación de permiso y agregación de elementos si corresponde
+                @if(\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->can('crear-colonia'))
+                    row.push('<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
                     '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
                     '@csrf' +
                     '@method("DELETE")' +
-                    '<input type="submit" class="btn btn-danger" onclick="return confirmarEliminar(' + colonia.id + ')" value="Borrar">' +
-                    '</form>' +
-                    '</td>' +
-                    '@endcan' +
-                    '</tr>';
-                $('#miTabla tbody').append(row);
+                    '<input type="submit" class="btn btn-danger" onclick="return confirmarEliminar(' + colonia.id + ')" value="Borrar">');
+                @endif
+                table.row.add(row);
                 $i++;
                 console.log($i);
             });
-
-            // Actualizar la configuración de la paginación
-            var newTotalRecords = $i; // Número total de registros después del filtro
-            $('#miTabla').DataTable().settings()[0]._iRecordsTotal = newTotalRecords;
-            $('#miTabla').DataTable().settings()[0]._iRecordsDisplay = newTotalRecords;
-            $('#miTabla').DataTable().draw(); // Redibujar la tabla con la nueva configuración de paginación
+            table.draw();
         },
 
         error: function(xhr, status, error) {
@@ -433,24 +430,5 @@
     });
 }
 </script>
-
-
-<script>
-  // Inicializamos el DataTable en la tabla
-  $('#miTabla').DataTable({
-    lengthMenu: [
-      [100, 200, 400],
-      [100, 200, 400]
-    ],
-    language: {
-      url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
-    },
-    // Desactivar la ordenación inicial
-    "order": []
-
-  });
-</script>
-
-
 
 @endsection
