@@ -62,9 +62,9 @@ class UserController extends Controller
         ]);
     
         $input = $request->all();
-        $input['nombre'] = strtoupper($input['nombre']);
-        $input['apellido_p'] = strtoupper($input['apellido_p']);
-        $input['apellido_m'] = strtoupper($input['apellido_m']);
+        //$input['nombre'] = strtoupper($input['nombre']);
+        //$input['apellido_p'] = strtoupper($input['apellido_p']);
+        // $input['apellido_m'] = strtoupper($input['apellido_m']);
         $input['password'] = Hash::make($input['password']);
     
         $user = User::create($input);
@@ -118,9 +118,9 @@ class UserController extends Controller
         ]);
     
         $input = $request->all();
-        $input['nombre'] = strtoupper($input['nombre']);
-        $input['apellido_p'] = strtoupper($input['apellido_p']);
-        $input['apellido_m'] = strtoupper($input['apellido_m']);
+        //$input['nombre'] = strtoupper($input['nombre']);
+        //$input['apellido_p'] = strtoupper($input['apellido_p']);
+        //$input['apellido_m'] = strtoupper($input['apellido_m']);
         if(!empty($input['password'])){ 
             $input['password'] = Hash::make($input['password']);
         }else{

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+@can('registrar-direccion')
     <section class="section">
         <div class="section-header">
             <h3 style="color:black" class="page__heading">Direcciones</h3>
@@ -26,7 +28,7 @@
                             @endif
                             <br><br>
                         @endcan
-            
+                        <label class="text-danger">Una direccion por usuario perrmitida</label>
                         <table class="table table-striped mt-2 table_id" id="miTabla">
                                <thead style="background-color:#326F8A; font-size: 14px">
   
@@ -111,4 +113,5 @@
     }
   });
 </script>
+@endcan
 @endsection

@@ -63,7 +63,7 @@
                                   <th style="display: none;">ID</th>
                                   <th style="color:#fff;">Nombre</th>
                                   <th style="color:#fff;">Apellido Paterno</th>
-                                  <th style="color:#fff;">Apellido Materno</th>
+                                  <th style="color:#fff;">Apellido materno</th>
                                   <th style="color:#fff;">Correo</th>
                                   <th style="color:#fff;">Rol</th>
                                   <th style="color:#fff;">Acciones</th>
@@ -121,26 +121,15 @@
     <!-- BOOTSTRAP -->
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
     <script>
-        new DataTable('#miTabla', {
-    lengthMenu: [
-        [2, 5, 10],
-        [2, 5, 10]
-    ],
-
-    columns: [
-        { Id: 'Id' },
-        { Nombre: 'Nombre' },
-        { Apellido Paterno: 'Apellido Paterno' },
-        { Apellido Materno: 'Apellido Materno' },
-        { Telefono: 'Telefono' },
-        { Email: 'E-mail' },
-        { Rol: 'Rol' },
-        { Acciones: 'Acciones' }
-    ],
-
-    language: {
+    // Inicializamos el DataTable en la tabla
+    $('#miTabla').DataTable({
+      lengthMenu: [
+        [5, 10, 20, 40],
+        [5, 10, 20, 40]
+      ],
+      language: {
         url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
-    }
-});
-    </script>
+      }
+    });
+</script>
 @endsection

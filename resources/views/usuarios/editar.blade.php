@@ -32,19 +32,19 @@
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="nombre">Nombre</label><span class="required text-danger">*</span>
-                                    {!! Form::text('nombre', null, array('class' => 'form-control uppercase-input')) !!}
+                                    {!! Form::text('nombre', null, array('class' => 'form-control ')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="ap_p">Apellido Paterno</label><span class="required text-danger">*</span>
-                                    {!! Form::text('apellido_p', null, array('class' => 'form-control uppercase-input')) !!}
+                                    {!! Form::text('apellido_p', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">
                                 <div class="form-group">
                                     <label for="ap_m">Apellido Materno</label><span class="required text-danger"></span>
-                                    {!! Form::text('apellido_m', null, array('class' => 'form-control uppercase-input')) !!}
+                                    {!! Form::text('apellido_m', null, array('class' => 'form-control')) !!}
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12">

@@ -30,22 +30,6 @@ class ColoniaController extends Controller
         ->get();
         return view('colonias.index', compact('colonias', 'estados'));
 
-        /**Version 2 de consulta
-         // Obtener todos los estados y pasarlos a la vista
-        $estados = Estado::all();
-        $colonias = Colonia::query()
-        ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
-        ->join('estados', 'municipios.estado_id', '=', 'estados.id')
-        ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
-        ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
-        ->select('estados.nombre as n_e', 'municipios.nombre as n_m',
-                 'colonias.nombre as n', 'colonias.id',
-                 'codigo_postals.codigo as c')
-        ->whereColumn('municipios.estado_id', '=', 'estados.id')
-        ->whereColumn('colonias.estado_id', '=', 'estados.id')
-        ->get();
-        return view('colonias.index', compact('colonias', 'estados'));
-         */
     }
 
     //Obtiene los municipios pertenecientes a un estado
@@ -55,8 +39,23 @@ class ColoniaController extends Controller
             ->get();        
         return $municipios;
     }
-    
-    //Obtiene los municipios pertenecientes a un estado
+
+    //Obtiene los cp pertenecientes a un estado
+    public function obtener_cp0($id)
+    {
+        $cp = Estado::query()
+        ->join('municipios', 'municipios.estado_id', '=', 'estados.id')
+        ->join('colonias', 'colonias.municipio_id', '=', 'municipios.id')
+        ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
+        ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
+        ->select('codigo_postals.codigo as c', 'codigo_postals.id')
+        ->where('estados.id','=', $id)
+        ->get();
+
+        return $cp;
+    }
+
+    //Obtiene los cp de los municipios pertenecientes a un estado
     public function obtener_cp($id)
     {
         $cp = Colonia::query()
@@ -147,9 +146,11 @@ class ColoniaController extends Controller
     }
 
     //Funcion para filtrar todas las colonias  pertencientes a un estado y municpio especifico -> recibe como entrada el id del estado y del municipio
-    public function filtro_cp_all($id)
+    public function filtro_cp_all($id, $est_id)
     { 
-       $colonias = Colonia::query()
+        
+        if($id>0){
+            $colonias = Colonia::query()
             ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
             ->join('estados', 'municipios.estado_id', '=', 'estados.id')
             ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
@@ -158,7 +159,22 @@ class ColoniaController extends Controller
                      'colonias.no_col as no','codigo_postals.codigo as c', 'colonias.ubicacion as u') 
             ->where('municipios.id', '=', $id)
             ->get();
-        return response()->json($colonias);
+            return response()->json($colonias);
+        }
+
+        else{
+            $colonias = Colonia::query()
+            ->join('municipios', 'colonias.municipio_id', '=', 'municipios.id')
+            ->join('estados', 'municipios.estado_id', '=', 'estados.id')
+            ->join('colonia_postals', 'colonias.id','=', 'colonia_postals.colonia_id')
+            ->join('codigo_postals', 'colonia_postals.codigo_postal_id','=', 'codigo_postals.id')
+            ->select('estados.nombre as n_e', 'municipios.nombre as n_m', 'colonias.nombre as n',
+                     'colonias.no_col as no','codigo_postals.codigo as c', 'colonias.ubicacion as u') 
+            ->where('estados.id', '=', $est_id)
+            ->get();
+            return response()->json($colonias);   
+        }
+
     }
 
     //Obtiene los datos correspondientes a un codigo postal (estado, municipio y colonias)

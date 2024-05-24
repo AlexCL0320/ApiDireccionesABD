@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@can('ver-colonias')
 <style>
     /* Estilos para la tabla */
     .table_id {
@@ -56,7 +57,7 @@
                       <label style="font-family: Nunito; font-size: 13.5px; color:black; margin-right: 21.2%;" for="estado">Estado</label>
                       <label style="font-family: Nunito; font-size: 13.5px; color:black" for="estado">Municipio</label>
                       <div class="d-flex align-items-center">
-                          <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this)">
+                          <select style="width: 20%; background-color: #CC0033; color: white; border-color: #CC0033;  margin-right: 5%" id="estado" class="form-control" onchange="filtro_estados(this); filtro_estado(this); filtro_cp0(this)">
                             <option value="0">----Todos---</option>
                             @foreach($estados as $estado)
                                 <option value="{{ $estado->id }}">{{ $estado->nombre}}</option>
@@ -220,7 +221,63 @@
   }
 </script>
 
-<!--Script para manipular la actualizacion del desplegable cp-->
+<!--Script para manipular la actualizacion del desplegable cp en base al estado-->
+<script>
+  function filtro_cp0(est) {
+    //Obtenemos el id seleccionado desde el desplegable
+    let est_id = est.value;
+    //Llamos al metodo obtener_mun del controlador para consultar los municipios del estaado
+    fetch('/colonias/obtener_cp0/' + est_id)
+      //Recuperamos la variable $cps de la consulta a la base de datos
+      .then(function(response) {
+        return response.json();
+      })
+      //Obtenemos el json de datos de la consulta
+      .then(function(jsonData) {
+        console.log("Filtro dos cps");
+        console.log(jsonData); 
+       consultarCP(jsonData);
+      })
+      //Recuperamos el tipo de error y lo mostramos en la consola del navegador
+      .catch(function(error) {
+        console.error('Error al consultar los CP:', error);
+      });
+       
+      //Funcion para rellenar el desplegable de cp
+      function consultarCP(jsonData){
+        //Obtenemos el desplegable de cp en base a su id
+        let cp_s = document.getElementById('cp') 
+        //Llamamos a la funcion de limpieza del desplegable para evitar acummular cp de estados diferentes
+        limpiar_cp(cp);
+        //Recorremos el json de datos
+        jsonData.forEach(function(cp){
+            // Obtener todas las opciones actuales del select
+            let opcionesExistentes = Array.from(cp_s.options).map(option => option.value);
+
+            // Verificar si la opción ya existe
+            if (!opcionesExistentes.includes(cp.id.toString())) {
+                // Crear una opción para el desplegable
+                let op_cp = document.createElement('option');
+                // Rellenar con el id del municipio
+                op_cp.value = cp.id;
+                // Rellenar con el nombre del municipio
+                op_cp.innerHTML = cp.c;
+                // Agregar la opción al desplegable
+                cp_s.append(op_cp);
+            }
+        });
+      }
+
+      //Funcion para limpiar los elementos previos del select 
+      function limpiar_cp(des_cp){
+        while(des_cp.options.length >1){
+          des_cp.remove(1);
+        }
+      }
+  }
+</script>
+
+<!--Script para manipular la actualizacion del desplegable cp en base al municipio-->
 <script>
   function filtro_cp(mun) {
     //Obtenemos el id seleccionado desde el desplegable
@@ -385,10 +442,11 @@
     // Obtener el ID del estado seleccionado
     var cp_id = $('#cp').val();
     var mun_id = $('#municipio').val();
+    var estado_id = $('#estado').val();
     console.log(cp_id);
 
     $.ajax({
-        url: cp_id > 0 ? '/colonias/filtro_cp/' + cp_id : '/colonias/filtro_cp_all/' + mun_id ,
+        url: cp_id > 0 ? '/colonias/filtro_cp/' + cp_id : '/colonias/filtro_cp_all/' + mun_id + '/' + estado_id ,
         method: 'POST',
         data: { id: cp_id, _token: '{{ csrf_token() }}' }, // Datos a enviar al controlador
         success: function(response) {
@@ -411,7 +469,7 @@
 
                 // Verificación de permiso y agregación de elementos si corresponde
                 @if(\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->can('crear-colonia'))
-                    row.push('<a style="background-color: #415A5A; color: white; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
+                    row.push('<a style="background-color: #415A5A; color: white; margin-right: 5%; margin-bottom: 5%;" class="btn" href="/colonias/' + colonia.id + '/edit" title="Editar colonia">Editar</a>' +
                     '<form method="POST" action="/colonias/' + colonia.id + '" style="display:inline" id="deleteForm-' + colonia.id + '">' +
                     '@csrf' +
                     '@method("DELETE")' +
@@ -430,5 +488,5 @@
     });
 }
 </script>
-
+@endcan
 @endsection
