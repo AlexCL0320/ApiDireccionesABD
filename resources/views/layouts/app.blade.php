@@ -48,7 +48,13 @@
 
     @yield('css')
 </head>
-<body>
+<body onclick= "playAudio()">
+<!-- Musica de fondo -->
+<audio id="audio" loop autoplay>
+        <source src="{{ asset('audio/fondo_app.mp3') }}" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+</audio>
+
 <div id="app">
     <div  class="main-wrapper main-wrapper-1">
         <div style="background-color: #253745" class="navbar-bg"></div>
@@ -106,5 +112,19 @@
             }
         };
     }(jQuery));
+</script>
+
+<script>
+    
+    // Manejador de evento para doble clic
+    document.body.addEventListener('dblclick', function(event) {
+        document.getElementById("audio").pause();  
+    });
+        
+    function playAudio(){
+        var audio = document.getElementById("audio");
+        audio.volume = 0.25; // Establece el volumen al 50%
+        document.getElementById("audio").play();   
+    }
 </script>
 </html>

@@ -15,8 +15,14 @@
     <link rel="stylesheet" href="{{ asset('assets/css/iziToast.min.css') }}">
     <link href="{{ asset('assets/css/sweetalert.css') }}" rel="stylesheet" type="text/css"/>
     <link href="{{ asset('assets/css/select2.min.css') }}" rel="stylesheet" type="text/css"/>
-</head>
-<body style="background-color: white; margin: 0; padding: 0; height: 100%;">
+
+    </head>
+<body onclick= "playAudio()" style="background-color: white; margin: 0; padding: 0; height: 100%;">
+<!-- Musica de fondo -->
+<audio id="audio" loop autoplay>
+        <source src="{{ asset('audio/fondo_login.mp3') }}" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+</audio>
 
 <div id="app">
     <div class="card-header" style="border-color: #FFFFFF;background-color: #253745; color: white; display: flex; justify-content: flex-start; align-items: flex-start; height: 48px;border-radius: 0px;">
@@ -61,5 +67,19 @@
 <script src="{{ asset('web/js/stisla.js') }}"></script>
 <script src="{{ asset('web/js/scripts.js') }}"></script>
 <!-- Page Specific JS File -->
+
+<script>
+    
+    // Manejador de evento para doble clic
+    document.body.addEventListener('dblclick', function(event) {
+        document.getElementById("audio").pause();  
+    });
+        
+    function playAudio(){
+        document.getElementById("audio").play();   
+    }
+</script>
+
+
 </body>
 </html>

@@ -28,12 +28,12 @@
                             @endif
                             <br><br>
                         @endcan
-                        <label class="text-danger">Una direccion por usuario perrmitida</label>
+                        <label class="text-danger">Una direccion por usuario permitida</label>
                         <table class="table table-striped mt-2 table_id" id="miTabla">
                                <thead style="background-color:#326F8A; font-size: 14px">
   
-                                    <th style="display: none;">Titular</th>
-                                    <th style="color:#fff;">Titular</th>
+                                    <th style="display: none;">Id</th>
+                                    <th style="width: 10% ; color:#fff;">Titular</th>
                                     <th style="color:#fff;">Calle</th>
                                     <th style="color:#fff;">No. Ext</th>                                    
                                     <th style="color:#fff;">No. Int</th>

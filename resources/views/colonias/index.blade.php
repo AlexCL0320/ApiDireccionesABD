@@ -10,7 +10,7 @@
 
     /* Estilos para las celdas de la tabla */
     .table_id th, .table_id td {
-        padding: 8px;
+        padding: 20px;
         text-align: left;
         border-bottom: 1px solid #ddd;
     }

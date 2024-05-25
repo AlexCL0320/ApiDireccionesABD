@@ -86,19 +86,19 @@
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="calle_lbl">Calle</label><span class="required text-danger">*</span>
-                                        {!! Form::text('calle', null, array('class' => 'form-control uppercase-input')) !!}
+                                        {!! Form::text('calle', null, array('class' => 'form-control')) !!}
                                     </div>
                                 </div>                            
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="n_e_lbl">No. Exterior</label><span class="required text-danger">*</span>
-                                        {!! Form::number('numero_ex', null, array('class' => 'form-control uppercase-input')) !!}
+                                        {!! Form::number('numero_ex', null, array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
                                 <div class="col-xs-12 col-sm-12 col-md-12">
                                     <div class="form-group">
                                         <label for="n_i_lbl">No. Interior</label>
-                                        {!! Form::number('numero_int', null, array('class' => 'form-control uppercase-input')) !!}
+                                        {!! Form::number('numero_int', null, array('class' => 'form-control')) !!}
                                     </div>
                                 </div>
                             </div>
